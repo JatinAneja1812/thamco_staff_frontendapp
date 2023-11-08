@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 // import { useAuth0 } from '@auth0/auth0-react';
-import ErrorBoundary from "../../ErrorBoundary";
 import { Flex, Spin } from "antd";
 import HomePage from "../../Containers/Pages/Home/HomePage";
-import HomePageWithoutLogin from "../../Containers/Pages/Home/HomePageWithoutLogin";
+import SignInSignUp from "../../Containers/Pages/SignInSignUp/SignInSignUp";
+import ErrorBoundary from "../../ErrorBoundary";
 import PrivateRoute from "./PrivateRoute";
 
 const AppRoutes = () => {
@@ -27,7 +27,7 @@ const AppRoutes = () => {
         }
       >
        <Routes>
-          <Route exact path="/" element={<HomePageWithoutLogin />} />
+          <Route exact path="/" element={<SignInSignUp />} />
           <Route
             path="/home"
             element={
