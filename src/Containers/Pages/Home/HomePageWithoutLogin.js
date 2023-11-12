@@ -1,16 +1,26 @@
-import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-// import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 function HomePageWithoutLogin() {
-    const { loginWithRedirect } = useAuth0();
-  
-    return (
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect to /home if the user is authenticated
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [isAuthenticated, navigate]);
+
+  return (
+    !isAuthenticated && (
       <div>
         <h1>Welcome to the public Home Page</h1>
-        <button onClick={() => loginWithRedirect()}>Login</button>
+        <button onClick={() => loginWithRedirect({ redirect_uri: 'http://localhost:3000' })}>Sign In</button>
       </div>
-    );
-  }
-  
-  export default HomePageWithoutLogin;
+    )
+  );
+}
+
+export default HomePageWithoutLogin;

@@ -1,19 +1,21 @@
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-// import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from "@auth0/auth0-react";
 import { Flex, Spin } from "antd";
 import HomePage from "../../Containers/Pages/Home/HomePage";
-import SignInSignUp from "../../Containers/Pages/SignInSignUp/SignInSignUp";
+import HomePageWithoutLogin from "../../Containers/Pages/Home/HomePageWithoutLogin";
 import ErrorBoundary from "../../ErrorBoundary";
-import PrivateRoute from "./PrivateRoute";
 
 const AppRoutes = () => {
+  const { isLoading, error } = useAuth0();
+
   return (
     <ErrorBoundary>
       <Suspense
         fallback={
           <Flex align="center" gap="middle">
             <Spin
+              spinning={isLoading}
               delay={500}
               style={{
                 flex: 1,
@@ -26,17 +28,16 @@ const AppRoutes = () => {
           </Flex>
         }
       >
-       <Routes>
-          <Route exact path="/" element={<SignInSignUp />} />
-          <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                <HomePage />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
+        {error && <p>Authentication Error</p>}
+        {!error && !isLoading && (
+          <Routes>
+            <Route exact path="/" element={<HomePageWithoutLogin />} />
+            <Route
+              path="/home"
+              element={<HomePage />}
+            />
+          </Routes>
+        )}
       </Suspense>
     </ErrorBoundary>
   );
