@@ -3,13 +3,15 @@ import { Route, Routes } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Flex, Spin } from "antd";
 import HomePage from "../../Containers/Pages/Home/HomePage";
-import HomePageWithoutLogin from "../../Containers/Pages/Home/HomePageWithoutLogin";
+import LandingPage from "../../Containers/Pages/Home/LandingPage";
 import ErrorBoundary from "../../ErrorBoundary";
+import Template from "../../AppTemplate/Template";
 
 const AppRoutes = () => {
   const { isLoading, error } = useAuth0();
 
   return (
+    <Template>
     <ErrorBoundary>
       <Suspense
         fallback={
@@ -28,18 +30,21 @@ const AppRoutes = () => {
           </Flex>
         }
       >
-        {error && <p>Authentication Error</p>}
-        {!error && !isLoading && (
-          <Routes>
-            <Route exact path="/" element={<HomePageWithoutLogin />} />
-            <Route
-              path="/home"
-              element={<HomePage />}
-            />
-          </Routes>
-        )}
+        
+          {error && <p>Authentication Error</p>}
+          {!error && !isLoading && (
+            <Routes>
+              <Route exact path="/" element={<LandingPage />} />
+              <Route
+                path="/home"
+                element={<HomePage />}
+              />
+            </Routes>
+          )}
+       
       </Suspense>
     </ErrorBoundary>
+    </Template>
   );
 };
 

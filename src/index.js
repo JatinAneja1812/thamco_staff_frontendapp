@@ -4,6 +4,12 @@ import './index.css';
 import App from './Containers/Main/App';
 import reportWebVitals from './reportWebVitals';
 import Auth0Provider from './Hooks/Authentication/Auth0Provider';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+library.add(fas, far, fab);
 
 window.onmousedown = (e) => {
   if (e.button === 1) {

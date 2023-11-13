@@ -68,14 +68,40 @@ a {
 }
 
 body {
-  background: #f6f5f7;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Style for the main container */
+.app-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  font-family: "Montserrat", sans-serif;
-  height: 100vh;
-  margin: -50px 0 50px;
+  min-height: 100vh; /* Ensure the container takes at least the full height of the viewport */
+}
+
+/* Style for the header */
+Header {
+  /* background: linear-gradient(to right, #3498db, #2c3e50); Use your preferred color scheme */
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+}
+
+/* Style for the content */
+Content {
+  flex: 1; /* Make the content take up all available vertical space */
+  padding: 20px;
+}
+
+/* Style for the footer */
+Footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  margin-top: auto; /* Push the footer to the bottom */
 }
 
 button {
