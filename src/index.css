@@ -5,9 +5,43 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(253deg, rgb(235, 248, 237), rgb(251, 250, 244), rgb(235, 248, 237));
+  background-size: 300% 300%;
+  animation: Background3 25s ease infinite;
+}
+
+@keyframes Background3 {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(67, 94, 56); /* Change the color as needed */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* Firefox */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(67, 94, 56) #f1f1f1; /* Change the colors as needed */
 }

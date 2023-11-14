@@ -1,7 +1,40 @@
+/* Style for the main container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Style for the header */
+Header {
+    /* background: linear-gradient(to right, #3498db, #2c3e50); Use your preferred color scheme */
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Add a subtle box shadow for depth */
+}
+
+/* Style for the content */
+Content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Style for the footer */
+Footer {
+    background-color: rgb(67, 94, 56);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    margin-top: auto;
+    /* Push the footer to the bottom */
+}
+
 .header {
     position: relative;
     text-align: center;
-    background: linear-gradient(60deg, rgb(0, 0, 10) 0%, rgb(119, 148, 152) 100%);
+    background: linear-gradient(60deg, rgb(7, 59, 38) 0%, rgb(67, 94, 56) 100%);
     color: white;
 }
 
@@ -21,16 +54,57 @@
 
 .waves {
     width: 100%;
-    height: 10vh;
+    height: 6vh;
     margin-bottom: -7px;
-    min-height: 100px;
+    min-height: 30px;
     max-height: 150px;
 }
 
-.Nav {
-   
+.NavPublic {
     display: grid;
-    flex: 1;
+    flex: 0.3;
+    text-align: right;
+    grid-area: nav;
+    grid-template-columns: repeat(4, auto);
+    align-items: center;
+    justify-items: center;
+}
+
+.NavPublic a {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    transition: 0.5s;
+    text-decoration: none;
+}
+
+.NavPublic a:hover {
+    transform: scale(1.1);
+}
+
+.NavPublic button {
+    padding: 10px;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    color: #fff;
+    font-weight: 600;
+    background-color: rgba(255, 0, 0, 0.5);
+    box-shadow: 0px 5px 0px 0px rgba(255, 0, 0, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 70ms;
+}
+
+.NavPublic button:active {
+    transform: translateY(3px);
+    box-shadow: 0px 2px 0px 0px rgba(255, 0, 0, 0.25);
+}
+
+
+.Nav {
+    display: grid;
+    flex: 0.8;
     text-align: right;
     grid-area: nav;
     grid-template-columns: repeat(6, auto);
@@ -95,7 +169,8 @@
         position: absolute;
         width: 20vh;
         top: 6vh;
-        right: 2vh; /* Adjust as needed to position it on the right side */
+        right: 2vh;
+        /* Adjust as needed to position it on the right side */
         grid-template-rows: repeat(4, auto);
         grid-template-columns: none;
         padding: 30px 0 30px;
@@ -103,7 +178,22 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
-      }
+    }
+
+    .NavPublic {
+        position: absolute;
+        width: 20vh;
+        top: 6vh;
+        right: 2vh;
+        /* Adjust as needed to position it on the right side */
+        grid-template-rows: repeat(4, auto);
+        grid-template-columns: none;
+        padding: 30px 0 30px;
+        background: rgba(40, 44, 47, 0.95);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
 
     .Burger {
         display: inline;
