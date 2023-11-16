@@ -13,13 +13,13 @@ const CustomersReview = (props) => {
     <Container>
       <section className="sm:space-y-10 space-y-8">
         {/* Title */}
-        <h1 className="pb-0 md:text-2xl tracking-wide text-xl font-semibold capitalize">
+        <h1 className="pb-0 md:text-2xl tracking-wide text-xl font-semibold capitalize" style={{fontSize: "28px"}}>
           What people say
         </h1>
 
         {/* Reviews */}
         <Swiper
-          style={{ minHeight: '14rem' }}
+          style={{ minHeight: '14rem',  top: "27px" }}
           loop={true}
           centeredSlides={true}
           breakpoints={{

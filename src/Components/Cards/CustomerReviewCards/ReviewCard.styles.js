@@ -9,6 +9,7 @@ const CardContainer = styled.div`
   width: 40vh;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 16px;
+  top: 20px;
 `;
 
 const UserInfoContainer = styled.div`
@@ -45,17 +46,20 @@ const ReviewText = styled.div`
   flex: 1;
 `;
 
-const TruckIcon = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-`;
-
 const ContentContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 16px; // Adjust the margin as needed
+  margin-left: 16px; /* Adjust the margin as needed */
 `;
 
-export { CardContainer, UserInfoContainer, UserName, HappyCustomerText, RatingContainer, RatingStar, ReviewText, TruckIcon, ContentContainer}
+export {
+  CardContainer,
+  UserInfoContainer,
+  UserName,
+  HappyCustomerText,
+  RatingContainer,
+  RatingStar,
+  ReviewText,
+  ContentContainer,
+};
