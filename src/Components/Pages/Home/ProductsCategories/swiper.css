@@ -1,0 +1,12 @@
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #4caf50; /* Adjust arrow color */
+}
+
+.swiper-button-disabled {
+  color: #8b8b8b; /* Adjust disabled arrow color */
+}
