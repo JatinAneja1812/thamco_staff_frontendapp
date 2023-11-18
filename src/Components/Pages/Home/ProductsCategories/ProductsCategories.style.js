@@ -2,28 +2,22 @@ import { Button } from "@mui/material";
 import styled from "styled-components";
 
 export const ProductsCategoriesContainerWrapper = styled.div`
-  .swiper-container {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-
-  .swiper-slide {
-    width: 100%;
-  }
-
-  .swiper-pagination-bullet {
-    background-color: #8b8b8b;
+  .swiper-pagination-bullet-custom {
+    width: 10px;
+    height: 10px;
+    background-color: #fff; /* Customize bullet color */
+    opacity: 0.6;
+    margin: 0 4px; /* Adjust spacing between bullets */
   }
 
   .swiper-pagination-bullet-active {
-    background-color: #4caf50; /* Adjust active bullet color */
+    background-color: #4caf50; /* Customize active bullet color */
   }
 
   .swiper-button-next:after,
-  .swiper-button-prev::after {
-    color: rgb(237, 108, 2);
-    font-size: 1.6rem;
-    font-weight: bold !important;
+  .swiper-button-prev:after {
+    color: #000; /* Arrow color */
+    font-size: 2rem; /* Arrow size */
   }
 `;
 

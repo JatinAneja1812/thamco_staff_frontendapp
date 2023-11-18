@@ -5,6 +5,15 @@ import Hero from "./Hero/Hero";
 import CustomersReview from "./CustomerReviews/CustomersReview";
 import { openErrorNotification } from "../../../Hooks/Notification/GlobalNotification";
 import ProductsCategories from "./ProductsCategories/ProductsCategories";
+import banner1  from "../../../Assets/Banners/banner1.png";
+import banner2  from "../../../Assets/Banners/banner2.png";
+import OffersBannerSlider from "../../Banners/OffersBanner";
+import AboutStaff from "./About/AboutThAmCoStaff";
+
+const banners = [
+  { image: banner1 },
+  { image: banner2 },
+];
 
 function HomePage() {
   const { isAuthenticated } = useAuth0();
@@ -59,11 +68,12 @@ function HomePage() {
         <main className='min-h-screen space-y-5 mb-9'>
           <Hero />
           <ProductsCategories />
+          <OffersBannerSlider banners={banners}/>
           <CustomersReview 
             userReviews={userReviews}
             isLoading={isLoading}
           />
-          <h1> Authenicated page </h1>
+          <AboutStaff />
         </main>
       </Fade>
     )

@@ -11,7 +11,7 @@ const CustomersReview = (props) => {
 
   return (
     <Container>
-      <section className="sm:space-y-10 space-y-8">
+      <section className="sm:space-y-10 space-y-8" style={{marginTop: "35px", marginBottom: "72px"}}>
         {/* Title */}
         <h1 className="pb-0 md:text-2xl tracking-wide text-xl font-semibold capitalize" style={{fontSize: "28px"}}>
           What people say
@@ -56,6 +56,7 @@ const CustomersReview = (props) => {
               ))}
         </Swiper>
       </section>
+      <div style={{marginBottom: "35px"}} />
     </Container>
   );
 };

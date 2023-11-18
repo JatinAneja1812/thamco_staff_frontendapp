@@ -5,21 +5,29 @@ import { useNavigate } from "react-router-dom";
 import { FreeMode, Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import dairy from "../../../../Assets/Categories/dairy.png";
 import fruits from "../../../../Assets/Categories/fruits.png";
 import grains from "../../../../Assets/Categories/grains.png";
 import meat from "../../../../Assets/Categories/meat.png";
+import petfood from "../../../../Assets/Categories/petfoods.png";
+import beverages from "../../../../Assets/Categories/beverages.png";
+import snacks from "../../../../Assets/Categories/snacks.png";
+import chocolates from "../../../../Assets/Categories/chocolates.png";
+import icecreams from "../../../../Assets/Categories/icecreams.png";
+import cereal from "../../../../Assets/Categories/cereals.png";
 import vegetables from "../../../../Assets/Categories/vagetable.png"; // Fix the typo
 import CategoryCard from "../../../Cards/ProductsCards/CategoriesCards";
+// import './swiper.css';
 import {
-    CategoryCardWrapper,
-    CategoryContainer,
-    HeaderSection,
-    HeaderTitle,
-    ProductsCategoriesContainerWrapper,
-    SeeAllButton,
-    StyledButtonWrapper,
+  CategoryCardWrapper,
+  CategoryContainer,
+  HeaderSection,
+  HeaderTitle,
+  ProductsCategoriesContainerWrapper,
+  SeeAllButton,
+  StyledButtonWrapper,
 } from "./ProductsCategories.style";
 
 const ProductsCategories = () => {
@@ -52,16 +60,22 @@ const ProductsCategories = () => {
 
 const Categories = () => {
   const categoryData = [
-    { name: "Meat", img: meat, bgColor: "#FF5733" },
-    { name: "Vegetables", img: vegetables, bgColor: "#7CBB52" },
-    { name: "Fruits", img: fruits, bgColor: "#FFD700" },
-    { name: "Dairy", img: dairy, bgColor: "#FF91A4" },
-    { name: "Grains", img: grains, bgColor: "#965B51" },
+    { name: "Meat", img: meat },
+    { name: "Vegetables", img: vegetables },
+    { name: "Fruits", img: fruits },
+    { name: "Dairy", img: dairy },
+    { name: "Grains", img: grains },
+    { name: "Beverages", img: beverages },
+    { name: "Pet Supplies", img: petfood },
+    { name: "Snacks", img: snacks },
+    { name: "Chocolates", img: chocolates },
+    { name: "Ice-creams", img: icecreams },
+    { name: "Breakfast food", img: cereal },
   ];
 
   return (
     <CategoryContainer>
-      <Swiper
+     <Swiper
         {...FreeMode}
         {...Navigation}
         {...Pagination}
@@ -77,6 +91,10 @@ const Categories = () => {
           992: {
             slidesPerView: 4,
           },
+        }}
+        pagination={{
+          clickable: true, // Enable clickable bullets
+          bulletClass: 'swiper-pagination-bullet-custom', // Add a custom class for styling
         }}
       >
         {categoryData.map((category, index) => (

@@ -1,15 +1,17 @@
-import styled from 'styled-components';
-import { Star } from '@mui/icons-material';
+import styled from "styled-components";
+import { Star } from "@mui/icons-material";
 
 const CardContainer = styled.div`
-  display: flex;
-  background-color: #fff;
+  background-color: #ffffffb3;
   border-radius: 8px;
-  padding: 16px;
-  width: 40vh;
+  padding: 23px;
+  width: 35vh;
+  height: 19vh;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 16px;
-  top: 20px;
+  position: relative;
+  top: 0px;
+  display: inline-table;
 `;
 
 const UserInfoContainer = styled.div`
@@ -35,6 +37,8 @@ const RatingContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 8px;
+  justify-content: center;
+  margin-left: -3vh;
 `;
 
 const RatingStar = styled(Star)`
