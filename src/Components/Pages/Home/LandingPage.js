@@ -3,6 +3,8 @@ import { Fade } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import banner1 from "../../../Assets/Banners/banner1.png";
 import banner2 from "../../../Assets/Banners/banner2.png";
+import banner3 from "../../../Assets/Banners/banner3.png";
+import banner4 from "../../../Assets/Banners/banner4.png";
 import { openErrorNotification } from "../../../Hooks/Notification/GlobalNotification";
 import OffersBannerSlider from "../../Banners/OffersBanner";
 import AboutStaff from "./About/AboutThAmCoStaff";
@@ -14,6 +16,8 @@ import ChartsDashboard from "./Charts/ChartsDashboard";
 const banners = [
   { image: banner1 },
   { image: banner2 },
+  { image: banner3 },
+  { image: banner4 },
 ];
 
 export default function LandingPage() {

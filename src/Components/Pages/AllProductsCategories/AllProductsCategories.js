@@ -9,7 +9,7 @@ import {
 } from "./AllProductsCategories.styles";
 
 const AllProductsCategories = () => {
-  // Scrolling Bug Fixed
+  
   useEffect(() => {
     window.scroll({ top: 0 });
   }, []);

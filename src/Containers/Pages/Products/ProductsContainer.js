@@ -41,7 +41,6 @@ export default function ProductsContainer({categoryProducts}) {
         },
         (error) => {
           openErrorNotification("Server Error", error.message);
-          setIsLoading(false);
         }
       );
 
@@ -79,7 +78,6 @@ export default function ProductsContainer({categoryProducts}) {
         },
         (error) => {
           openErrorNotification("Server Error", error.message);
-          setIsLoading(false);
         }
       );
 
@@ -98,7 +96,7 @@ export default function ProductsContainer({categoryProducts}) {
   return (
     <div>
       {categoryProducts ? (
-        <CategoricalProducts products={products} isLoading={isLoading} />
+        <CategoricalProducts products={products} categoryName={categoryName} isLoading={isLoading} />
       ) : (
         <AllProducts products={products} isLoading={isLoading} />
       )}
