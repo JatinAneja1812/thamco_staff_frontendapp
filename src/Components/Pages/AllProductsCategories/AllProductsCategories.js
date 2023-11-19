@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Container, Fade } from "@mui/material";
-import CategoryCard from "../../Cards/ProductsCards/CategoriesCards";
+import CategoryCard from "../../Cards/ProductsCategoryCards/CategoriesCards";
 import allCategories from "../../../Utility/Categores/CategoriesList";
 import {
   ProductsCategoriesContainerWrapper,

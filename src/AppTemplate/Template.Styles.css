@@ -107,7 +107,7 @@ Footer {
     flex: 0.8;
     text-align: right;
     grid-area: nav;
-    grid-template-columns: repeat(6, auto);
+    grid-template-columns: repeat(7, auto);
     align-items: center;
     justify-items: center;
 }

@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import CategoryCard from "../../../Cards/ProductsCards/CategoriesCards";
+import CategoryCard from "../../../Cards/ProductsCategoryCards/CategoriesCards";
 // import './swiper.css';
 import {
   CategoryCardWrapper,

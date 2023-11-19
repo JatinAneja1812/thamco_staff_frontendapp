@@ -43,7 +43,7 @@ const CustomersReview = (props) => {
           freeMode={true}
           className="mySwiper"
         >
-          {props.isLoading
+          {!props.isLoading
             ? props.userReviews.map((userReview, i) => (
                 <SwiperSlide key={i}>
                   <ReviewCard userReview={userReview} />

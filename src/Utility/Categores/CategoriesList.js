@@ -20,8 +20,8 @@ const allCategories = [
     { id: 6, name: "Pet Foods ", img: petfood },
     { id: 7, name: "Snacks", img: snacks },
     { id: 8, name: "Chocolates", img: chocolates },
-    { id: 9, name: "Ice-creams", img: icecreams },
-    { id: 10, name: "Breakfast food", img: cereal },
+    { id: 9, name: "Ice-Creams", img: icecreams },
+    { id: 10, name: "Breakfast Food", img: cereal },
   ];
   
   export default allCategories;
