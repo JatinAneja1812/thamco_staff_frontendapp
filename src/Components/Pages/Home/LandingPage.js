@@ -1,24 +1,26 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Fade } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import banner1 from "../../../Assets/Banners/banner1.png";
-import banner2 from "../../../Assets/Banners/banner2.png";
-import banner3 from "../../../Assets/Banners/banner3.png";
-import banner4 from "../../../Assets/Banners/banner4.png";
+// import banner1 from "../../../Assets/Banners/banner1.png";
+// import banner2 from "../../../Assets/Banners/banner2.png";
+// import banner3 from "../../../Assets/Banners/banner3.png";
+// import banner4 from "../../../Assets/Banners/banner4.png";
 import { openErrorNotification } from "../../../Hooks/Notification/GlobalNotification";
-import OffersBannerSlider from "../../Banners/OffersBanner";
+// import OffersBannerSlider from "../../Banners/OffersBanner";
 import AboutStaff from "./About/AboutThAmCoStaff";
 import CustomersReview from "./CustomerReviews/CustomersReview";
 import Hero from "./Hero/Hero";
 import ProductsCategories from "./ProductsCategories/ProductsCategories";
 import ChartsDashboard from "./Charts/ChartsDashboard";
+import CustomerComplaints from "./CustomerComplaints/CustomerComplaints";
+import SatisfactionPieCharts from "./Charts/ChartsDashboardV2";
 
-const banners = [
-  { image: banner1 },
-  { image: banner2 },
-  { image: banner3 },
-  { image: banner4 },
-];
+// const banners = [
+//   { image: banner1 },
+//   { image: banner2 },
+//   { image: banner3 },
+//   { image: banner4 },
+// ];
 
 export default function LandingPage() {
   const { isAuthenticated } = useAuth0();
@@ -72,12 +74,13 @@ export default function LandingPage() {
         <main className="min-h-screen space-y-5 mb-9">
           <Hero />
           <ProductsCategories />
-          <OffersBannerSlider banners={banners}/>
+          <ChartsDashboard />
+          <SatisfactionPieCharts />
+          <CustomerComplaints />
           <CustomersReview
             userReviews={userReviews}
             isLoading={isLoading}
           />
-          <ChartsDashboard />
           <AboutStaff />
         </main>
       </Fade>

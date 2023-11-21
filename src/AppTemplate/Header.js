@@ -1,6 +1,4 @@
 import { UpOutlined } from "@ant-design/icons";
-import { useAuth0 } from "@auth0/auth0-react";
-
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import Fade from "@mui/material/Fade";
@@ -10,8 +8,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { animateScroll as scroll } from "react-scroll";
 import { CSSTransition } from "react-transition-group";
-import "./Template.Styles.css";
 import CartIconButton from "../Components/Buttons/CartButton/CartButton";
+import { useAuth } from "../Hooks/Authentication/AuthProvider";
+import "./Template.Styles.css";
+
+
 // This function will add Go_back feature on the Navbar
 function ScrollTop(props) {
   const { children, window } = props;
@@ -62,13 +63,13 @@ function ElevationScroll(props) {
 }
 
 const Header = (props) => {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const { login, user, isAuthenticated, logout } = useAuth();
 
   const handleLogin = () => {
     if (isAuthenticated) {
-      logout({ returnTo: window.location.origin });
+      logout();
     } else {
-      loginWithRedirect({ redirect_uri: "http://localhost:3000" });
+      login();
     }
   };
 

@@ -5,12 +5,27 @@ import useChart from "./useChart";
 const DashboardContainer = styled.div`
   padding: 20px;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap; /* Allow items to wrap onto the next line */
+  justify-content: space-around; /* Adjust as needed */
   align-items: center;
+  background: #fff;
+`;
+
+const SectionTitle = styled.h1`
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333; /* Adjust the color as needed */
 `;
 
 const ChartWrapper = styled.div`
-  width: 48%; /* Adjust the width as needed */
+  height: 50vh;
+  width: 48%;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  background: #fcfff7;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 `;
 
 const ChartTitle = styled.h2`
@@ -64,6 +79,7 @@ const ChartsDashboard = () => {
 
   return (
     <DashboardContainer>
+      <SectionTitle>Statistics</SectionTitle>
       <ChartWrapper>
         <ChartTitle>Customer Visits</ChartTitle>
         {useChart({

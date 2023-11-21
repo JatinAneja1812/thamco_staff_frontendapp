@@ -21,6 +21,7 @@ const ProductCardWrapper = styled.div`
 const ProductsCard = styled(Card)`
   max-width: ${({ isSmallScreen }) => (isSmallScreen ? '275px' : '295px')};
   margin: 0 auto;
+  postion: relative;
   box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.1);
   background-color: white;
 `;

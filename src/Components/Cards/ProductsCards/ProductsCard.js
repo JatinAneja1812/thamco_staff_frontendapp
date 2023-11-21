@@ -1,7 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { Button, Card, CardActions, CardContent, Fade, Rating, Skeleton, useMediaQuery } from '@mui/material';
+import { Button, Card, CardActions, CardContent, Fade, Rating, Skeleton, useMediaQuery, IconButton } from '@mui/material';
 import { Star } from '@mui/icons-material';
+import  { InfoCircleOutlined } from '@ant-design/icons';
 import { ProductsCard, ProductCardMedia, ProductCardContent, ProductTitle, ProductText, ProductRatingContainer, ProductCardWrapper} from "./ProductsCard.styles";
+import ProductDetailsModal from '../../Modals/ProductsDetails/ProductDetailsModal';
 // import { groceryContext } from '../../Layout/Layout';
 // import { handleSessionStorage } from '../../../utils/utils';
 // import SuccessAlert from '../../SuccessAlert/SuccessAlert';
@@ -15,6 +17,19 @@ const ProductCard = ({ product }) => {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
 
   const [openAlert, setOpenAlert] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState([]);
+
+  const handleInfomationOpen = (e) => {
+    setOpenDetails(true)
+    setSelectedProduct(product)
+  }
+
+  const handleInfomationClose = () => {
+    setOpenDetails(false)
+    setSelectedProduct([]);
+  }
+
 //   const { cartItemsState } = useContext(groceryContext);
 //   const [cartItems, setCartItems] = cartItemsState;
 
@@ -45,63 +60,87 @@ const ProductCard = ({ product }) => {
 
       <Fade in={true}>
         <ProductsCard isSmallScreen={isSmallScreen}>
-          {/* Product_img */}
-          <ProductCardMedia
-            component="img"
-            height={isSmallScreen ? 140 : 200}
-            image={Img}
-            alt={ProductName}
-          />
-
-          <ProductCardContent>
-            {/* title */}
-            <ProductTitle>{ProductName}</ProductTitle>
-            <div className="space-y-2">
-              <div className="flex justify-center space-x-5" style={{
-                display: "flex",
-                justifyContent: "space-around",
-                marginBottom: "15px"
-              }}>
-                {/* Amount */}
-                <ProductText>± {Quantity} {Unit}</ProductText>
-                {/* Price */}
-                <ProductText>£ {Price} GB</ProductText>
-              </div>
-
-              <div className="flex justify-center">
-                {/* Ratings */}
-                <ProductRatingContainer>
-                  <Rating
-                    size="small"
-                    name="product_ratings"
-                    value={Reviews}
-                    readOnly
-                    precision={0.5}
-                    emptyIcon={<Star fontSize="inherit" />}
-                  />
-                  {/*Number of Reviews*/}
-                  <ProductText>({ReviewCount} Reviews)</ProductText>
-                </ProductRatingContainer>
-              </div>
-            </div>
-          </ProductCardContent>
-          <CardActions>
-            <Button
-              fullWidth
-              className='addToCartButton'
-            //   onClick={handleAddToCartBtn}
-              size={isMediumScreen ? 'small' : 'medium'}
-              variant="outlined"
-              style={{
-                background: "green",
-                color: "white"
-              }}
+            {/* Product_img */}
+            <ProductCardMedia
+                component="img"
+                height={isSmallScreen ? 140 : 200}
+                image={Img}
+                alt={ProductName}
+            />
+            {/* Product_details_icon */}
+            <IconButton
+                color="primary"
+                aria-label="info"
+                size="small"
+                style={{
+                    position: 'absolute',
+                    marginLeft: "21vh",
+                    marginTop: "11px"
+                }}
+                onClick={(e) => handleInfomationOpen(e)}
             >
-              Add to cart
-            </Button>
-          </CardActions>
+                <InfoCircleOutlined style={{fontSize: "22px", color: "green"}} />
+            </IconButton>
+
+            {/* Product_content */}
+            <ProductCardContent>
+                {/* title */}
+                <ProductTitle>{ProductName}</ProductTitle>
+                <div className="space-y-2">
+                <div className="flex justify-center space-x-5" style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    marginBottom: "15px"
+                }}>
+                    {/* Amount */}
+                    <ProductText>± {Quantity} {Unit}</ProductText>
+                    {/* Price */}
+                    <ProductText>£ {Price} GB</ProductText>
+                </div>
+
+                <div className="flex justify-center">
+                    {/* Ratings */}
+                    <ProductRatingContainer>
+                    <Rating
+                        size="small"
+                        name="product_ratings"
+                        value={Reviews}
+                        readOnly
+                        precision={0.5}
+                        emptyIcon={<Star fontSize="inherit" />}
+                    />
+                    {/*Number of Reviews*/}
+                    <ProductText>({ReviewCount} Reviews)</ProductText>
+                    </ProductRatingContainer>
+                </div>
+                </div>
+            </ProductCardContent>
+          
+            {/* Product_content */}
+            <CardActions>
+                <Button
+                fullWidth
+                className='addToCartButton'
+                //   onClick={handleAddToCartBtn}
+                size={isMediumScreen ? 'small' : 'medium'}
+                variant="outlined"
+                style={{
+                    background: "green",
+                    color: "white"
+                }}
+                >
+                Add to cart
+                </Button>
+            </CardActions>
         </ProductsCard>
       </Fade>
+
+      <ProductDetailsModal 
+        handleInfomationClose={handleInfomationClose}
+        open={openDetails}
+        product={selectedProduct}
+      />
+
     </ProductCardWrapper>
   );
 };

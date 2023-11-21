@@ -36,7 +36,7 @@ const ProductsCategories = () => {
     <Container>
       <ProductsCategoriesContainerWrapper>
         <HeaderSection>
-          <HeaderTitle>Popular Categories</HeaderTitle>
+          <HeaderTitle>Products Categories</HeaderTitle>
           <StyledButtonWrapper>
             <SeeAllButton
               size={isExtraSmallScreen ? "small" : "medium"}
@@ -49,7 +49,7 @@ const ProductsCategories = () => {
             </SeeAllButton>
           </StyledButtonWrapper>
         </HeaderSection>
-
+        {/* All_Categories */}
         <Categories />
       </ProductsCategoriesContainerWrapper>
     </Container>
