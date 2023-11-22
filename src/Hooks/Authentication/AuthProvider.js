@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
         const token = await getAccessTokenSilently();
         setAccessToken(token);
         sessionStorage.setItem('access_token', token);
-
+        sessionStorage.setItem('user', user);
         // Schedule token refresh before it expires
         const { expires_in } = JSON.parse(atob(token.split('.')[1]));
         const refreshTimeout = expires_in * 1000 - 10000; // Refresh 10 seconds before expiration

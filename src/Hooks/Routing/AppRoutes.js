@@ -9,6 +9,7 @@ import LandingPage from "../../Components/Pages/Home/LandingPage";
 import HomePage from "../../Components/Pages/Home/HomePage";
 import ProductsContainer from "../../Containers/Pages/Products/ProductsContainer";
 import AllProductsCategories from "../../Components/Pages/AllProductsCategories/AllProductsCategories";
+import EmailVerificationPage from "../Authentication/EmailVerificationPage";
 
 const AppRoutes = () => {
   const { isLoading, error } = useAuth0();
@@ -38,6 +39,7 @@ const AppRoutes = () => {
             <Routes>
               <Route exact path="/" element={<HomePageContainer />} />
               <Route path="/" element={<LandingPage />} />
+              <Route path="/email-verification" component={EmailVerificationPage} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/categories" element={<AllProductsCategories />} />
               <Route path="/products" element={<ProductsContainer />} />
