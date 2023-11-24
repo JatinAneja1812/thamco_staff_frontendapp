@@ -17,8 +17,7 @@ function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const getUsersReviews = () => {
-    console.log("Landing page");
-
+ 
     setIsLoading(true);
 
     fetch("https://localhost:7262/api/Customers/GetAllReviews", {

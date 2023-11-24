@@ -7,12 +7,12 @@ const ChartsContainer = styled.div`
   justify-content: center;
   column-gap: 12px;
   margin-top: 0px;
-  height: 65vh;
+  height: 70vh;
   background: #fff;
 
   div {
     width: 51vh;
-    height: 51vh;
+    height: 65vh;
     position: relative;
     border-radius: 10%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
