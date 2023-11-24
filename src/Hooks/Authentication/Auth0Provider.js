@@ -3,6 +3,7 @@ import { Auth0Provider as ReactAuth0Provider } from '@auth0/auth0-react';
 
 const DOMAIN = process.env.REACT_APP_THAMCO_AUTH0_DOMAIN;
 const CLIENT_ID = process.env.REACT_APP_THAMCO_AUTH0_CLIENT_ID;
+const AUDIENCE = process.env.REACT_APP_THAMCO_AUTH0_AUDIENCE; 
 
 const Auth0Provider = ({ children }) => {
   return (
@@ -10,6 +11,10 @@ const Auth0Provider = ({ children }) => {
       domain={DOMAIN}
       clientId={CLIENT_ID}
       redirectUri={window.location.origin}
+      authorizationParams={{
+        audience: AUDIENCE,
+        redirect_uri: window.location.origin,
+      }}
     >
       {children}
     </ReactAuth0Provider>

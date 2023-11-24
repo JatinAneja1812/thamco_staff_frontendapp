@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { animateScroll as scroll } from "react-scroll";
 import { CSSTransition } from "react-transition-group";
 import "./Template.Styles.css";
+import CartIconButton from "../Components/Buttons/CartButton/CartButton";
 // This function will add Go_back feature on the Navbar
 function ScrollTop(props) {
   const { children, window } = props;
@@ -128,6 +129,7 @@ const Header = (props) => {
                   <Link to="/pricing">Pricing</Link>
                   <Link to="/orders">Orders</Link>
                   <Link to="/products">Products</Link>
+                  <CartIconButton />
                   <button className="btn btn-primary" onClick={handleLogin}>
                     {isAuthenticated ? "Logout" : "Login"}
                   </button>
