@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const BannerSliderContainer = styled.div`
   width: 67%;
-  height: 61vh;
+  height: 68vh;
   top: -15px;
   margin: 0 auto;
   overflow: hidden;

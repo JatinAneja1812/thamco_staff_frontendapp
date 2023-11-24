@@ -1,28 +1,23 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Fade } from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import { openErrorNotification } from "../../../Hooks/Notification/GlobalNotification";
+import AboutStaff from "./About/AboutThAmCoStaff";
 import CustomersReview from "./CustomerReviews/CustomersReview";
 import Hero from "./Hero/Hero";
-import { openErrorNotification } from "../../../Hooks/Notification/GlobalNotification";
 import ProductsCategories from "./ProductsCategories/ProductsCategories";
-import banner1  from "../../../Assets/Banners/banner1.png";
-import banner2  from "../../../Assets/Banners/banner2.png";
-import OffersBannerSlider from "../../Banners/OffersBanner";
-import AboutStaff from "./About/AboutThAmCoStaff";
+import ChartsDashboard from "./Charts/ChartsDashboard";
+import CustomerComplaints from "./CustomerComplaints/CustomerComplaints";
+import SatisfactionPieCharts from "./Charts/ChartsDashboardV2";
 
-const banners = [
-  { image: banner1 },
-  { image: banner2 },
-];
 
 export default function LandingPage() {
   const { isAuthenticated } = useAuth0();
 
   const [userReviews, setUserReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getUsersReviews = () => {
-    console.log("Landing page");
 
     setIsLoading(true);
 
@@ -30,8 +25,6 @@ export default function LandingPage() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: user.authToken,
-        // Username: user.username,
       },
     })
       .then(async (httpResponse) => {
@@ -52,12 +45,12 @@ export default function LandingPage() {
         },
         (error) => {
           openErrorNotification("Server Error", error.message);
-          setIsLoading(false);
         }
       );
+
+      setIsLoading(false);
   };
 
-  
   useEffect(() => {
     getUsersReviews();
   }, []);
@@ -68,7 +61,9 @@ export default function LandingPage() {
         <main className="min-h-screen space-y-5 mb-9">
           <Hero />
           <ProductsCategories />
-          <OffersBannerSlider banners={banners}/>
+          <ChartsDashboard />
+          <SatisfactionPieCharts />
+          <CustomerComplaints />
           <CustomersReview
             userReviews={userReviews}
             isLoading={isLoading}
