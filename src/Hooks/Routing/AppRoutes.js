@@ -10,6 +10,7 @@ import HomePage from "../../Components/Pages/Home/HomePage";
 import ProductsContainer from "../../Containers/Pages/Products/ProductsContainer";
 import AllProductsCategories from "../../Components/Pages/AllProductsCategories/AllProductsCategories";
 import EmailVerificationPage from "../Authentication/EmailVerificationPage";
+import CustomersContainer from "../../Containers/Pages/Customers/CustomersContainer";
 
 const AppRoutes = () => {
   const { isLoading, error } = useAuth0();
@@ -43,6 +44,7 @@ const AppRoutes = () => {
               <Route path="/home" element={<HomePage />} />
               <Route path="/categories" element={<AllProductsCategories />} />
               <Route path="/products" element={<ProductsContainer />} />
+              <Route path="/customers" element={<CustomersContainer />} />
               <Route path="/categories/:categoryName" element={<ProductsContainer categoryProducts={true} />} />
             </Routes>
           </Template>
