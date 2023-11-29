@@ -2,7 +2,7 @@ import { Table } from "antd";
 import styled from "styled-components";
 
 const CustomersTableWrapper = styled(Table)`
-  width: 85%; // Set a fixed width for the table
+  width: 90%; // Set a fixed width for the table
   margin: 0 auto; // Center the table horizontally
 
   .ant-pagination {
@@ -26,6 +26,7 @@ const CustomersTableWrapper = styled(Table)`
   .ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active a{
     display: inline !important;
     border-color: #265c36 !important;
+    color: #265c36 !important;
   }
 
   // Filter icon active
