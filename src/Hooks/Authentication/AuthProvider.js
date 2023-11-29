@@ -19,8 +19,11 @@ const AuthProvider = ({ children }) => {
         const { expires_in } = JSON.parse(atob(token.split('.')[1]));
         const refreshTimeout = expires_in * 1000 - 10000; // Refresh 10 seconds before expiration
         setTimeout(refreshAccessToken, refreshTimeout);
+
       } catch (error) {
+
         console.error('Error fetching access token:', error);
+        
       }
     };
 
