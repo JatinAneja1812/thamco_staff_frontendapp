@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
       } catch (error) {
 
         console.error('Error fetching access token:', error);
-
+        
       }
     };
 
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
   }, [isAuthenticated, getAccessTokenSilently]);
 
   const handleLogin = () => {
-    loginWithRedirect();
+    loginWithRedirect({ redirect_uri: window.location.origin });
   };
 
   const handleLogout = () => {

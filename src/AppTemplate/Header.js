@@ -68,7 +68,7 @@ const Header = (props) => {
     if (isAuthenticated) {
       logout({ returnTo: window.location.origin });
     } else {
-      loginWithRedirect({ redirect_uri: "http://localhost:3000" });
+      loginWithRedirect({ redirect_uri: window.location.origin });
     }
   };
 
