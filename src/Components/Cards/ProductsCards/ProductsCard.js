@@ -74,7 +74,7 @@ const ProductCard = ({ product }) => {
                 size="small"
                 style={{
                     position: 'absolute',
-                    marginLeft: "21vh",
+                    marginLeft: "19.5vh",
                     marginTop: "11px"
                 }}
                 onClick={(e) => handleInfomationOpen(e)}

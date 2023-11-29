@@ -125,7 +125,7 @@ const Header = (props) => {
               ) : (
                 <nav className="Nav">
                   <Link to="/home">Home</Link>
-                  <Link to="/customer">Customer</Link>
+                  <Link to="/customers">Customer</Link>
                   <Link to="/pricing">Pricing</Link>
                   <Link to="/orders">Orders</Link>
                   <Link to="/products">Products</Link>

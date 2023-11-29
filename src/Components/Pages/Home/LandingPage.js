@@ -21,7 +21,7 @@ export default function LandingPage() {
 
     setIsLoading(true);
 
-    fetch("https://localhost:7262/api/Customers/GetAllReviews", {
+    fetch("https://localhost:7259/api/UserReviews/GetAllReviews", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

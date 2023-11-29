@@ -15,11 +15,11 @@ export default function ProductsContainer({categoryProducts}) {
 
     setIsLoading(true);
 
-    fetch("https://localhost:7262/api/Products/GetAllProducts", {
+    fetch("https://localhost:7259/api/Products/GetAllProducts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: user.authToken,
+         Authorization: "Bearer " + sessionStorage.getItem("access_token"),
         // Username: user.username,
       },
     })
@@ -51,12 +51,10 @@ export default function ProductsContainer({categoryProducts}) {
 
     setIsLoading(true);
 
-    fetch("https://localhost:7262/api/Products/GetAllCategoryProducts", {
+    fetch("https://localhost:7259/api/Products/GetAllCategoryProducts", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        // Authorization: user.authToken,
-        // Username: user.username,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(categoryName)
     })
