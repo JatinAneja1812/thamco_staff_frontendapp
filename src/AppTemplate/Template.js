@@ -198,6 +198,10 @@ const Template = (props) => {
                 {/* Add more Menu items as needed */}
               </Menu>
             )}
+             {/* Version text at the bottom */}
+            <div style={{ position: "absolute", bottom: 0, width: "100%", textAlign: "center", color: "#fff", padding: "8px", fontSize: "17px" }}>
+              Version 1.0.0
+            </div>
           </Sider>
 
           <Layout

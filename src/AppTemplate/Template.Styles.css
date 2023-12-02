@@ -27,20 +27,26 @@ Content {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgb(67, 94, 56); /* Your desired background color */
-    color: #fff; /* Your desired text color */
+    background-color: rgb(67, 94, 56);
+    /* Your desired background color */
+    color: #fff;
+    /* Your desired text color */
     padding: 10px 0;
     text-align: center;
-  }
-  
-  .fixed-footer .container {
+}
+
+.fixed-footer .container {
     max-width: 1200px;
-  }
-  
-  .fixed-footer span {
+}
+
+.fixed-footer .text-muted {
     font-size: 16px;
     margin-left: 73vh;
-  }
+}
+
+.fixed-footer .text-version {
+    font-size: 16px;
+}
 
 .header {
     position: relative;
@@ -190,7 +196,7 @@ Content {
         width: 20vh;
         top: 6vh;
         right: 2vh;
-        
+
         /* Adjust as needed to position it on the right side */
         grid-template-rows: repeat(4, auto);
         grid-template-columns: none;
