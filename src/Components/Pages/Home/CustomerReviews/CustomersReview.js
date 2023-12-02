@@ -19,7 +19,7 @@ const CustomersReview = (props) => {
 
         {/* Reviews */}
         <Swiper
-          style={{ minHeight: '14rem',  top: "27px" }}
+          style={{ minHeight: '14rem',  top: "27px", zIndex: 0 }}
           loop={true}
           centeredSlides={true}
           breakpoints={{

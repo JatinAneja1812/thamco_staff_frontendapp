@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import "./Template.Styles.css"; // Import your custom CSS for the footer styling
 
-export default function Footer() {
+const Footer = () => {
   const [currentYear, setCurrentYear] = useState(moment().format("YYYY"));
 
   useEffect(() => {
@@ -14,7 +15,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="mt-auto py-5 bg-dark">
+    <footer className="fixed-footer">
       <div className="container d-flex justify-content-center">
         <span className="text-muted">
           Copyright &copy; Three Amigos Corporation {currentYear}
@@ -22,4 +23,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

@@ -87,7 +87,7 @@ const CustomerComplaints = () => {
         <Title>Out of Stock Products</Title>
         <ItemList>
           {products.map((product) => (
-            <Item key={product.id} style={{height:"18vh"}}>
+            <Item key={product.id} style={{height:"23vh"}}>
               <ProductInfo>
                 <ProductDetails bold>{product.name}</ProductDetails>
                 <ReorderButton type="primary">Reorder</ReorderButton>

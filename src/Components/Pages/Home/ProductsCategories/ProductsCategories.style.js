@@ -46,7 +46,7 @@ export const HeaderSection = styled.section`
   align-items: center;
   justify-content: space-between;
   padding-bottom: 1rem;
-  height: 50px;
+  height: 100px;
   @media (min-width: 665px) {
     flex-direction: row;
   }
