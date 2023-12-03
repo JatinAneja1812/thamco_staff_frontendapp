@@ -60,10 +60,10 @@ export default function LandingPage() {
       <Fade in={true}>
         <main className="min-h-screen space-y-5 mb-9">
           <Hero />
-          <ProductsCategories />
           <ChartsDashboard />
           <SatisfactionPieCharts />
           <CustomerComplaints />
+          <ProductsCategories />
           <CustomersReview
             userReviews={userReviews}
             isLoading={isLoading}

@@ -21,14 +21,31 @@ Content {
     padding: 20px;
 }
 
-/* Style for the footer */
-Footer {
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: rgb(67, 94, 56);
+    /* Your desired background color */
     color: #fff;
-    padding: 10px;
+    /* Your desired text color */
+    padding: 10px 0;
     text-align: center;
-    margin-top: auto;
-    /* Push the footer to the bottom */
+}
+
+.fixed-footer .container {
+    max-width: 1200px;
+}
+
+.fixed-footer .text-muted {
+    font-size: 16px;
+    margin-left: 73vh;
+}
+
+.fixed-footer .text-version {
+    font-size: 16px;
 }
 
 .header {
@@ -50,6 +67,8 @@ Footer {
     position: relative;
     left: 2vh;
     text-align: left;
+    margin-left: -212px;
+    z-index: 1;
 }
 
 .waves {
@@ -61,11 +80,14 @@ Footer {
 }
 
 .NavPublic {
-    display: grid;
-    flex: 0.3;
+    display: flex;
+    flex: 0.1999 1;
+    margin-right: 20vh;
+    justify-content: space-evenly;
     text-align: right;
     grid-area: nav;
-    grid-template-columns: repeat(4, auto);
+    margin-top: 25px;
+    grid-template-columns: repeat(10, auto);
     align-items: center;
     justify-items: center;
 }
@@ -87,10 +109,12 @@ Footer {
     outline: none;
     border: none;
     font-size: 20px;
+    top: -13px;
+    position: relative;
     color: #fff;
     font-weight: 600;
-    background-color: rgba(255, 0, 0, 0.5);
-    box-shadow: 0px 5px 0px 0px rgba(255, 0, 0, 0.25);
+    background-color: rgba(224, 255, 0, 50%);
+    box-shadow: 0px 5px 0px 0px rgba(224, 255, 0, 0.25);
     border-radius: 10px;
     cursor: pointer;
     transition: 70ms;
@@ -103,11 +127,13 @@ Footer {
 
 
 .Nav {
-    display: grid;
-    flex: 0.8;
+    display: flex;
+    flex: 0.1999 1;
     text-align: right;
     grid-area: nav;
-    grid-template-columns: repeat(7, auto);
+    margin-right: 24vh;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(10, auto);
     align-items: center;
     justify-items: center;
 }
@@ -131,8 +157,8 @@ Footer {
     font-size: 20px;
     color: #fff;
     font-weight: 600;
-    background-color: rgba(255, 0, 0, 0.5);
-    box-shadow: 0px 5px 0px 0px rgba(255, 0, 0, 0.25);
+    background-color: rgba(224, 255, 0, 50%);
+    box-shadow: 0px 5px 0px 0px rgba(224, 255, 0, 0.25);
     border-radius: 10px;
     cursor: pointer;
     transition: 70ms;
@@ -170,12 +196,13 @@ Footer {
         width: 20vh;
         top: 6vh;
         right: 2vh;
+
         /* Adjust as needed to position it on the right side */
         grid-template-rows: repeat(4, auto);
         grid-template-columns: none;
         padding: 30px 0 30px;
-        background: rgba(40, 44, 47, 0.95);
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        background-color: rgba(224, 255, 0, 50%);
+        box-shadow: 0px 5px 0px 0px rgba(224, 255, 0, 0.25);
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
     }
@@ -189,8 +216,8 @@ Footer {
         grid-template-rows: repeat(4, auto);
         grid-template-columns: none;
         padding: 30px 0 30px;
-        background: rgba(40, 44, 47, 0.95);
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        background-color: rgba(224, 255, 0, 50%);
+        box-shadow: 0px 5px 0px 0px rgba(224, 255, 0, 0.25);
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
     }

@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
   }, [isAuthenticated, getAccessTokenSilently]);
 
   const handleLogin = () => {
-    loginWithRedirect({ redirect_uri: "http://localhost:3000" });
+    loginWithRedirect({ redirect_uri: window.location.origin });
   };
 
   const handleLogout = () => {

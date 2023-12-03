@@ -79,6 +79,7 @@ const Categories = () => {
             slidesPerView: 4,
           },
         }}
+        style={{ zIndex: 0 }}
         pagination={{
           clickable: true, // Enable clickable bullets
           bulletClass: "swiper-pagination-bullet-custom", // Add a custom class for styling
