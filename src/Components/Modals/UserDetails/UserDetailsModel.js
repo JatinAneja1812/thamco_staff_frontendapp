@@ -15,7 +15,7 @@ export default function UserDetailsModal(props) {
       open={props.open}
       closable={false}
       width={"59vh"}
-      style={{ top: 80, right: 10, position: 'fixed' }}
+      style={{ top: 80, right: 40, position: 'fixed' }}
       okButtonProps={{ style: { display: "none" } }} // Hide the OK button
       cancelButtonProps={{ style: { display: "none" } }} // Hide the Cancel button
       onCancel={() => {

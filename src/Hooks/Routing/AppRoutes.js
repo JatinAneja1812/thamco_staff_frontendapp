@@ -11,6 +11,8 @@ import ProductsContainer from "../../Containers/Pages/Products/ProductsContainer
 import AllProductsCategories from "../../Components/Pages/AllProductsCategories/AllProductsCategories";
 import EmailVerificationPage from "../Authentication/EmailVerificationPage";
 import CustomersContainer from "../../Containers/Pages/Customers/CustomersContainer";
+import ProtectedRoute from "./ProtectedRoute";
+import ShoppingCart from "../../Components/Pages/Cart/ShoppingCart";
 
 const AppRoutes = () => {
   const { isLoading, error } = useAuth0();
@@ -46,6 +48,9 @@ const AppRoutes = () => {
               <Route path="/products" element={<ProductsContainer />} />
               <Route path="/customers" element={<CustomersContainer />} />
               <Route path="/categories/:categoryName" element={<ProductsContainer categoryProducts={true} />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/cart" element={<ShoppingCart />} />
+              </Route>
             </Routes>
           </Template>
         )}

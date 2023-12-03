@@ -1,25 +1,25 @@
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import StyledAvatar from "../Components/Avatar/Avatar";
 import CartIconButton from "../Components/Buttons/CartButton/CartButton";
-import { openErrorNotification } from "../Hooks/Notification/GlobalNotification";
+import { useAuth } from "../Hooks/Authentication/AuthProvider";
 import "./Template.Styles.css";
 
-const Header = () => {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+const Header = ({collapsed}) => {
+  const { login, isAuthenticated, logout } = useAuth();
 
   const handleLogin = () => {
     if (isAuthenticated) {
-      logout({ returnTo: window.location.origin });
+      logout();
     } else {
-      loginWithRedirect({ redirect_uri: window.location.origin });
+      login();
     }
   };
 
   const [isNavVisible, setNavVisibility] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [staffData, setStaffData] = useState(false);
+  const [staffData, setStaffData] = useState([]);
 
   React.useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 700px)");
@@ -31,9 +31,8 @@ const Header = () => {
     };
   }, []);
 
-  React.useEffect(() => {
-    if (isAuthenticated) {
-
+  const fetchData = React.useMemo(() => {
+    return () => {
       fetch("https://localhost:7259/api/Users/GetStaffUser", {
         method: "GET",
         headers: {
@@ -57,13 +56,16 @@ const Header = () => {
         .then(
           (result) => {
             setStaffData(JSON.parse(result));
-          },
-          (error) => {
-            openErrorNotification("Server Error", error.message);
           }
         );
+    };
+  }, []); // Add dependencies as needed
+
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      fetchData();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, fetchData]);
   
 
   const handleMediaQueryChange = (mediaQuery) => {
@@ -77,13 +79,14 @@ const Header = () => {
   const toggleNav = () => {
     setNavVisibility(!isNavVisible);
   };
+
   return (
     <div
       className="header"
-      style={{ position: "fixed", top: 0, width: "100%", zIndex: 1 }}
+      style={{ position: "fixed", top: 0, width: collapsed ?"107%" : "100%", zIndex: 1 }}
     >
       <div className="header-flex">
-        <div className="brand">
+        <div className="brand" style={{ marginLeft: collapsed ? "-95px": "-212px"}}>
           <h1>ThAmCo Corporation Staff</h1>
         </div>
         <button onClick={toggleNav} className="Burger">

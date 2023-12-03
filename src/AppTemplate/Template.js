@@ -1,230 +1,226 @@
 import {
   HomeOutlined,
   UpOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
 } from "@ant-design/icons";
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import PeopleIcon from '@mui/icons-material/People';
-import CategoryIcon from '@mui/icons-material/Category';
-import Box from "@mui/material/Box";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import PeopleIcon from "@mui/icons-material/People";
+import CategoryIcon from "@mui/icons-material/Category";
 import Fab from "@mui/material/Fab";
-import Fade from "@mui/material/Fade";
 import Toolbar from "@mui/material/Toolbar";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
-import { Layout, Menu } from "antd";
-import React, { useState } from "react";
-import { animateScroll as scroll } from "react-scroll";
+import { Button, Layout, Menu } from "antd";
+import React, { useState, createContext } from "react";
 import Content from "./Content";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
+import {
+  ElevationScroll,
+  ScrollTop,
+} from "../Utility/LibraryFunctions/ScrollToTopUtility";
+import handleSessionStorage from "../Utility/LibraryFunctions/HandleSessionStorage";
 
 const { Sider } = Layout;
 
-// This function will add Go_back feature on the Navbar
-function ScrollTop(props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-    disableHysteresis: true,
-    threshold: 100,
-  });
-
-  // Go_back to the top Button Handler
-  const handleClick = () => {
-    scroll.scrollToTop({
-      duration: 500,
-      smooth: true,
-    });
-  };
-  return (
-    <Fade in={trigger}>
-      <Box
-        onClick={handleClick}
-        role="presentation"
-        sx={{ position: "fixed", bottom: 20, right: 16 }}
-      >
-        {children}
-      </Box>
-    </Fade>
-  );
-}
-
-// This function will show a Elevation effect on the Navbar when scrolling
-function ElevationScroll(props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0,
-    target: window ? window() : undefined,
-  });
-
-  return React.cloneElement(children, {
-    elevation: trigger ? 4 : 0,
-  });
-}
+export const groceryContext = createContext();
 
 const Template = (props) => {
   const { isAuthenticated } = useAuth0();
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [isCollapsed, setCollapsed] = useState(false);
+  const [cartItems, setCartItems] = useState(cartItemsFromSessionStorage);
 
   const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
+    console.log("hit1");
+    setCollapsed(!isCollapsed);
   };
 
   return (
     <>
-      {" "}
-      <ElevationScroll {...props}>
-        <Layout style={{ minHeight: "100vh" }}>
-          <Sider
-            width={220}
-            collapsedWidth={80} // Set a value larger than 0 to keep a collapsed sidebar visible
-            trigger={null}
-            collapsible
-            collapsed={collapsed}
-            style={{
-              position: "fixed",
-              height: "100vh",
-              zIndex: 1,
-              background:
-                "linear-gradient(180deg, rgb(7, 59, 38) 40%, rgb(67, 94, 56) 100%)",
-            }}
-          >
-            {/* Your Logo or Branding can be placed here */}
-            <div
+      <groceryContext.Provider
+        value={{
+          cartItemsState: [cartItems, setCartItems],
+        }}
+      >
+        <ElevationScroll {...props}>
+          <Layout>
+            {/* Fixed side menu */}
+            <Sider
+              width={220}
+              collapsedWidth={100} // Set a value larger than 0 to keep a collapsed sidebar visible
+              trigger={null}
+              collapsible
+              collapsed={isCollapsed}
               style={{
-                height: "100px",
-                background: "rgb(7, 59, 38)",
-                textAlign: "center",
+                position: "fixed",
+                transition: "width 0.3s ease-in-out",
+                width: isCollapsed ? "100px" : "220px",
+                height: "100vh",
+                zIndex: 1,
+                background:
+                  "linear-gradient(180deg, rgb(7, 59, 38) 40%, rgb(67, 94, 56) 100%)",
               }}
             >
-              {/* Your Logo or Branding content */}
-            </div>
+              <div onClick={() => toggleCollapsed()}>
+                {isCollapsed ? (
+                  <MenuUnfoldOutlined
+                    style={{
+                      color: "#fff",
+                      fontSize: "24px",
+                      marginTop: "86px",
+                      marginLeft: "67px",
+                      cursor: "pointer",
+                    }}
+                  />
+                ) : (
+                  <MenuFoldOutlined
+                    style={{
+                      color: "#fff",
+                      fontSize: "24px",
+                      marginTop: "86px",
+                      marginLeft: "187px",
+                      cursor: "pointer",
+                    }}
+                  />
+                )}
+              </div>
 
-            {!isAuthenticated ? (
-              <Menu
-                mode="vertical"
-                style={{
-                  background: "rgb(7, 59, 38)",
-                }}
-                defaultSelectedKeys={["1"]}
-                inlineCollapsed={collapsed}
-              >
-                <Menu.Item
-                  key="1"
-                  icon={<HomeOutlined />}
+              {!isAuthenticated ? (
+                <Menu
+                  mode="vertical"
                   style={{
-                    color: "#fff",
-                    fontWeight: "700",
-                    background: "rgb(163 255 96 / 41%)",
+                    position: "relative",
+                    background: "rgb(7, 59, 38)",
                   }}
+                  defaultSelectedKeys={["1"]}
+                  // collapsed={isCollapsed}
                 >
-                  <Link to="/">Home</Link>
-                </Menu.Item>
-                <Menu.Item
-                  key="3"
-                  icon={<CategoryIcon />}
+                  <Menu.Item
+                    key="1"
+                    icon={<HomeOutlined />}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "700",
+                      background: "rgb(163 255 96 / 41%)",
+                    }}
+                  >
+                    <Link to="/">Home</Link>
+                  </Menu.Item>
+                  <Menu.Item
+                    key="3"
+                    icon={<CategoryIcon />}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "700",
+                      background: "rgb(163 255 96 / 41%)",
+                    }}
+                  >
+                    <Link to="/products">Products</Link>
+                  </Menu.Item>
+                </Menu>
+              ) : (
+                <Menu
+                  mode="vertical"
                   style={{
-                    color: "#fff",
-                    fontWeight: "700",
-                    background: "rgb(163 255 96 / 41%)",
+                    position: "relative",
+                    background: "rgb(7, 59, 38)",
                   }}
+                  defaultSelectedKeys={["1"]}
+                  // collapsed={isCollapsed}
                 >
-                  <Link to="/products">Products</Link>
-                </Menu.Item>
-                {/* Add more Menu items as needed */}
-              </Menu>
-            ) : (
-              <Menu
-                mode="vertical"
-                style={{
-                  background: "rgb(7, 59, 38)",
-                }}
-                defaultSelectedKeys={["1"]}
-                inlineCollapsed={collapsed}
-              >
-                <Menu.Item
-                  key="1"
-                  icon={<HomeOutlined />}
-                  style={{
-                    color: "#fff",
-                    fontWeight: "700",
-                    background: "rgb(163 255 96 / 41%)",
-                  }}
-                >
-                  <Link to="/home">Home</Link>
-                </Menu.Item>
-                <Menu.Item
-                  key="2"
-                  icon={<CategoryIcon />}
-                  style={{
-                    color: "#fff",
-                    fontWeight: "700",
-                    background: "rgb(163 255 96 / 41%)",
-                  }}
-                >
-                  <Link to="/products">Products</Link>
-                </Menu.Item>
-                <Menu.Item
-                  key="3"
-                  icon={<PeopleIcon/>}
-                  style={{
-                    color: "#fff",
-                    fontWeight: "700",
-                    background: "rgb(163 255 96 / 41%)",
-                  }}
-                >
-                  <Link to="/customers">Customers</Link>
-                </Menu.Item>
-                <Menu.Item
-                  key="4"
-                  icon={<ShoppingCartCheckoutIcon />}
-                  style={{
-                    color: "#fff",
-                    fontWeight: "700",
-                    background: "rgb(163 255 96 / 41%)",
-                  }}
-                >
-                  <Link to="/orders">Orders</Link>
-                </Menu.Item>
-                {/* Add more Menu items as needed */}
-              </Menu>
-            )}
-             {/* Version text at the bottom */}
-            <div style={{ position: "absolute", bottom: 0, width: "100%", textAlign: "center", color: "#fff", padding: "8px", fontSize: "17px" }}>
-              Version 1.0.0
-            </div>
-          </Sider>
+                  <Menu.Item
+                    key="1"
+                    icon={<HomeOutlined />}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "700",
+                      background: "rgb(163 255 96 / 41%)",
+                    }}
+                  >
+                    <Link to="/home">Home</Link>
+                  </Menu.Item>
+                  <Menu.Item
+                    key="2"
+                    icon={<CategoryIcon />}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "700",
+                      background: "rgb(163 255 96 / 41%)",
+                    }}
+                  >
+                    <Link to="/products">Products</Link>
+                  </Menu.Item>
+                  <Menu.Item
+                    key="3"
+                    icon={<PeopleIcon />}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "700",
+                      background: "rgb(163 255 96 / 41%)",
+                    }}
+                  >
+                    <Link to="/customers">Customers</Link>
+                  </Menu.Item>
+                  <Menu.Item
+                    key="4"
+                    icon={<ShoppingCartCheckoutIcon />}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "700",
+                      background: "rgb(163 255 96 / 41%)",
+                    }}
+                  >
+                    <Link to="/orders">Orders</Link>
+                  </Menu.Item>
+                </Menu>
+              )}
 
-          <Layout
-            className="site-layout"
-            style={{ marginLeft: collapsed ? 80 : 220 }}
-          >
-            <Header collapsed={collapsed} toggleCollapsed={toggleCollapsed} />
-            <Content>{props.children}</Content>
+              {/* Version text at the bottom */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  width: "100%",
+                  textAlign: "center",
+                  color: "#fff",
+                  padding: "8px",
+                  fontSize: "17px",
+                }}
+              >
+                Version 1.0.0
+              </div>
+            </Sider>
+
+            {/* Header and Content */}
+            <Layout
+              className="site-layout"
+              style={{ marginLeft: isCollapsed ? 100 : 220, display: "flex" }}
+            >
+              <Header collapsed={isCollapsed} />
+              <Content>{props.children}</Content>
+            </Layout>
+
+            {/* Fixed Footer  */}
+            <Footer />
           </Layout>
+        </ElevationScroll>
 
-          {/* Fixed Footer with Stylish Design */}
-          <Footer />
-        </Layout>
-      </ElevationScroll>
-      <Toolbar id="back-to-top-anchor" />
-      {/* Go_Back on the top btn */}
-      <ScrollTop {...props}>
-        <Fab color="warning" size="small" aria-label="scroll back to top">
-          <UpOutlined />
-        </Fab>
-      </ScrollTop>
+        <Toolbar id="back-to-top-anchor" />
+
+        {/* Go_Back on the top btn */}
+        <ScrollTop {...props}>
+          <Fab color="warning" size="small" aria-label="scroll back to top">
+            <UpOutlined />
+          </Fab>
+        </ScrollTop>
+      </groceryContext.Provider>
     </>
   );
 };
+
+const cartItemsFromSessionStorage =
+  handleSessionStorage("get", "cartItems") || [];
 
 export default Template;
