@@ -1,7 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import StyledAvatar from "../Components/Avatar/Avatar";
 import CartIconButton from "../Components/Buttons/CartButton/CartButton";
+import { openErrorNotification } from "../Hooks/Notification/GlobalNotification";
 import "./Template.Styles.css";
 
 const Header = () => {
@@ -17,6 +19,7 @@ const Header = () => {
 
   const [isNavVisible, setNavVisibility] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [staffData, setStaffData] = useState(false);
 
   React.useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 700px)");
@@ -27,6 +30,41 @@ const Header = () => {
       mediaQuery.removeListener(handleMediaQueryChange);
     };
   }, []);
+
+  React.useEffect(() => {
+    if (isAuthenticated) {
+
+      fetch("https://localhost:7259/api/Users/GetStaffUser", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("access_token"),
+          Email: sessionStorage.getItem("email"),
+        },
+      })
+        .then(async (httpResponse) => {
+          if (httpResponse.status === 500) {
+            var errorMessage = await httpResponse.text();
+            throw new Error(errorMessage);
+          }
+
+          if (!httpResponse.ok) {
+            throw new Error("Failed to get data.");
+          }
+
+          return httpResponse.text();
+        })
+        .then(
+          (result) => {
+            setStaffData(JSON.parse(result));
+          },
+          (error) => {
+            openErrorNotification("Server Error", error.message);
+          }
+        );
+    }
+  }, [isAuthenticated]);
+  
 
   const handleMediaQueryChange = (mediaQuery) => {
     if (mediaQuery.matches) {
@@ -39,8 +77,11 @@ const Header = () => {
   const toggleNav = () => {
     setNavVisibility(!isNavVisible);
   };
-return (
-    <div className="header" style={{ position: "fixed", top: 0, width: "100%", zIndex: 1 }}>
+  return (
+    <div
+      className="header"
+      style={{ position: "fixed", top: 0, width: "100%", zIndex: 1 }}
+    >
       <div className="header-flex">
         <div className="brand">
           <h1>ThAmCo Corporation Staff</h1>
@@ -66,6 +107,7 @@ return (
               <button className="btn btn-primary" onClick={handleLogin}>
                 {isAuthenticated ? "Logout" : "Login"}
               </button>
+              <StyledAvatar details={staffData} />
             </nav>
           )}
         </CSSTransition>
@@ -112,6 +154,5 @@ return (
     </div>
   );
 };
-
 
 export default Header;
