@@ -29,7 +29,7 @@ code {
 
 /* WebKit (Chrome, Safari) */
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-thumb {

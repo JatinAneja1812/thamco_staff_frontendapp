@@ -13,6 +13,7 @@ import EmailVerificationPage from "../Authentication/EmailVerificationPage";
 import CustomersContainer from "../../Containers/Pages/Customers/CustomersContainer";
 import ProtectedRoute from "./ProtectedRoute";
 import ShoppingCart from "../../Components/Pages/Cart/ShoppingCart";
+import OrdersContainer from "../../Containers/Pages/Orders/OrdersContainer";
 
 const AppRoutes = () => {
   const { isLoading, error } = useAuth0();
@@ -51,6 +52,7 @@ const AppRoutes = () => {
               <Route element={<ProtectedRoute />}>
                 <Route path="/cart" element={<ShoppingCart />} />
               </Route>
+              <Route path="/orders" element={<OrdersContainer />} />
             </Routes>
           </Template>
         )}

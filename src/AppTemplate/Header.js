@@ -11,6 +11,7 @@ const Header = ({collapsed}) => {
 
   const handleLogin = () => {
     if (isAuthenticated) {
+      sessionStorage.clear();
       logout();
     } else {
       login();
@@ -19,7 +20,6 @@ const Header = ({collapsed}) => {
 
   const [isNavVisible, setNavVisibility] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [staffData, setStaffData] = useState([]);
 
   React.useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 700px)");
@@ -30,43 +30,6 @@ const Header = ({collapsed}) => {
       mediaQuery.removeListener(handleMediaQueryChange);
     };
   }, []);
-
-  const fetchData = React.useMemo(() => {
-    return () => {
-      fetch("https://localhost:7259/api/Users/GetStaffUser", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + sessionStorage.getItem("access_token"),
-          Email: sessionStorage.getItem("email"),
-        },
-      })
-        .then(async (httpResponse) => {
-          if (httpResponse.status === 500) {
-            var errorMessage = await httpResponse.text();
-            throw new Error(errorMessage);
-          }
-
-          if (!httpResponse.ok) {
-            throw new Error("Failed to get data.");
-          }
-
-          return httpResponse.text();
-        })
-        .then(
-          (result) => {
-            setStaffData(JSON.parse(result));
-          }
-        );
-    };
-  }, []); // Add dependencies as needed
-
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      fetchData();
-    }
-  }, [isAuthenticated, fetchData]);
-  
 
   const handleMediaQueryChange = (mediaQuery) => {
     if (mediaQuery.matches) {
@@ -110,7 +73,7 @@ const Header = ({collapsed}) => {
               <button className="btn btn-primary" onClick={handleLogin}>
                 {isAuthenticated ? "Logout" : "Login"}
               </button>
-              <StyledAvatar details={staffData} />
+              <StyledAvatar />
             </nav>
           )}
         </CSSTransition>

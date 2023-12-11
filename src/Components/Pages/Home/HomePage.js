@@ -52,8 +52,44 @@ function HomePage() {
       setIsLoading(false);
   };
 
+  const getStaffUser = () => {
+
+    //CHANGE HERE
+    fetch("https://localhost:7276/api/UserProfiles/GetStaffDetails", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("access_token"),
+        Email: sessionStorage.getItem("email"),
+      },
+    })
+      .then(async (httpResponse) => {
+        if (httpResponse.status === 500) {
+          var errorMessage = await httpResponse.text();
+          throw new Error(errorMessage);
+        }
+
+        if (!httpResponse.ok) {
+          throw new Error("Failed to get data.");
+        }
+
+        return httpResponse.text();
+      })
+      .then(
+        (result) => {
+          let staff = JSON.parse(result);
+          sessionStorage.setItem("staffName", `${staff.firstName} ${staff.lastName}`);
+          sessionStorage.setItem("staffUserName", `${staff.username}`);
+        },
+        (error) => {
+          console.error("Error fetching data:", error.message);
+        }
+      )
+  };
+  
   useEffect(() => {
     getUsersReviews();
+    getStaffUser();
   }, []);
 
   return (

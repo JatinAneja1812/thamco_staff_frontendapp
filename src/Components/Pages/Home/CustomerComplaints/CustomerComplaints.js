@@ -72,10 +72,10 @@ const CustomerComplaints = () => {
         <ItemList>
           {complaints.map((complaint) => (
             <Item key={complaint.id}>
-              <ProductDetails>{complaint.name}</ProductDetails>
+              <ProductDetails style={{fontWeight: 700}}>{complaint.name}</ProductDetails>
               <ProductDetails>{complaint.details}</ProductDetails>
               <div>
-                <ProductDetails>Rating:</ProductDetails>
+                <ProductDetails style={{fontWeight: 500}}>Rating:</ProductDetails>
                 <Rate disabled defaultValue={complaint.rating} />
               </div>
               <ContactLink>Contact Customer Support</ContactLink>
@@ -89,7 +89,7 @@ const CustomerComplaints = () => {
           {products.map((product) => (
             <Item key={product.id} style={{height:"23vh"}}>
               <ProductInfo>
-                <ProductDetails>{product.name}</ProductDetails>
+                <ProductDetails style={{fontWeight: 700}}>{product.name}</ProductDetails>
                 <ReorderButton type="primary">Reorder</ReorderButton>
               </ProductInfo>
               <ProductDetails>

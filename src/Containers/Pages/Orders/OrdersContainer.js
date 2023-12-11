@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react'
 import { openErrorNotification } from '../../../Hooks/Notification/GlobalNotification';
-import CustomersPage from '../../../Components/Pages/Customers/CustomersPage';
+import Orders from '../../../Components/Pages/Orders/Orders';
 
+export default function OrdersContainer() {
 
-export default function CustomersContainer() {
-
-  const [customers, setCustomers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [serverError, setServerError] = useState(false);
+  const [data, setData] = useState([]);
+  const [historicOrders, setHistoricOrders] = useState([]);
+  const [serverError, setServerError] = useState(null);
+  const [activeOrdersCount, setActiveOrdersCount] = useState(null);
 
-  const getAllCustomers = () => {
-
+  const getAllOrders = () => {
     setIsLoading(true);
-
-    fetch("https://localhost:7259/api/Users/GetAllCustomers", {
+       //CHANGE HERE
+    fetch("https://localhost:7262/api/Order/GetAllOrders", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-         Authorization: "Bearer " + sessionStorage.getItem("access_token"),
-        // Username: user.username,
+          //Authorization: "Bearer " + sessionStorage.getItem("access_token"),
       },
     })
       .then(async (httpResponse) => {
@@ -26,39 +25,36 @@ export default function CustomersContainer() {
           var errorMessage = await httpResponse.text();
           throw new Error(errorMessage);
         }
-
+  
         if (!httpResponse.ok) {
           throw new Error("Failed to get data.");
         }
-
+  
         return httpResponse.text();
       })
       .then(
         (result) => {
-          setCustomers(JSON.parse(result));
+          console.log(JSON.parse(result))
+          setData(JSON.parse(result));
+          getAllActiveOrdersCount();
         },
         (error) => {
           openErrorNotification("Server Error", error.message);
           setServerError(error);
         }
-      )
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+      );
 
-  const deletCustomer = (record) => {
+      setIsLoading(false);
+  }
 
-    let UserId = record.userId;
-
+  const getAllHistoricOrders = () => {
     setIsLoading(true);
-
-    fetch("https://localhost:7259/api/Users/RemoveCustomer", {
-      method: "DELETE",
+       //CHANGE HERE
+    fetch("https://localhost:7262/api/Order/GetAllHistoricOrders", {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
          Authorization: "Bearer " + sessionStorage.getItem("access_token"),
-         UserId: UserId
       },
     })
       .then(async (httpResponse) => {
@@ -66,78 +62,80 @@ export default function CustomersContainer() {
           var errorMessage = await httpResponse.text();
           throw new Error(errorMessage);
         }
-
+  
         if (!httpResponse.ok) {
           throw new Error("Failed to get data.");
         }
-
+  
         return httpResponse.text();
       })
       .then(
-        () => {
-          getAllCustomers();
+        (result) => {
+          setHistoricOrders(JSON.parse(result));
         },
         (error) => {
           openErrorNotification("Server Error", error.message);
           setServerError(error);
         }
-      )
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+      );
 
-  const editCustomerFunds = (CustomerFundsDTO) => {
-    
+      setIsLoading(false);
+  }
+
+  const getAllActiveOrdersCount = () => {
     setIsLoading(true);
-
-    fetch("https://localhost:7259/api/Users/UpdateCustomerFunds", {
-      method: "PATCH",
+       //CHANGE HERE
+    fetch("https://localhost:7262/api/Order/GetAllOrdersCount", {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
          Authorization: "Bearer " + sessionStorage.getItem("access_token"),
       },
-      body: JSON.stringify(CustomerFundsDTO)
     })
       .then(async (httpResponse) => {
         if (httpResponse.status === 500) {
           var errorMessage = await httpResponse.text();
           throw new Error(errorMessage);
         }
-
+  
         if (!httpResponse.ok) {
           throw new Error("Failed to get data.");
         }
-
+  
         return httpResponse.text();
       })
       .then(
-        () => {
-          getAllCustomers();
+        (result) => {
+          console.log(JSON.parse(result));
+          setActiveOrdersCount(JSON.parse(result));
+          
         },
         (error) => {
           openErrorNotification("Server Error", error.message);
           setServerError(error);
         }
-      )
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+      );
+
+      setIsLoading(false);
+  }
 
   useEffect(() => {
-    getAllCustomers();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    getAllOrders();
+    getAllHistoricOrders();
   }, []);
 
   return (
-    
-     <CustomersPage
-        customers={customers}
+    <>
+      <Orders
+        ordersData={data}
+        setOrderData={setData}
         isLoading={isLoading}
-        serverError={serverError} 
-        deletCustomer={deletCustomer}
-        editCustomerFunds={editCustomerFunds}
-     />
+        historicOrdersData={historicOrders}
+        setHistoricOrdersData={setHistoricOrders}
+        setServerError={setServerError}
+        serverError={serverError}
+        activeOrdersCount={activeOrdersCount}
+      />
+    </>
   )
 }

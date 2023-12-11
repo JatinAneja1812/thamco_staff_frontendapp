@@ -1,26 +1,26 @@
 import {
   HomeOutlined,
-  UpOutlined,
-  MenuUnfoldOutlined,
   MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UpOutlined,
 } from "@ant-design/icons";
-import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import PeopleIcon from "@mui/icons-material/People";
+import { useAuth0 } from "@auth0/auth0-react";
 import CategoryIcon from "@mui/icons-material/Category";
+import PeopleIcon from "@mui/icons-material/People";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Fab from "@mui/material/Fab";
 import Toolbar from "@mui/material/Toolbar";
-import { Button, Layout, Menu } from "antd";
-import React, { useState, createContext } from "react";
-import Content from "./Content";
-import Footer from "./Footer";
-import Header from "./Header";
-import { useAuth0 } from "@auth0/auth0-react";
+import { Layout, Menu } from "antd";
+import React, { createContext, useState } from "react";
 import { Link } from "react-router-dom";
+import handleSessionStorage from "../Utility/LibraryFunctions/HandleSessionStorage";
 import {
   ElevationScroll,
   ScrollTop,
 } from "../Utility/LibraryFunctions/ScrollToTopUtility";
-import handleSessionStorage from "../Utility/LibraryFunctions/HandleSessionStorage";
+import Content from "./Content";
+import Footer from "./Footer";
+import Header from "./Header";
 
 const { Sider } = Layout;
 
@@ -33,7 +33,6 @@ const Template = (props) => {
   const [cartItems, setCartItems] = useState(cartItemsFromSessionStorage);
 
   const toggleCollapsed = () => {
-    console.log("hit1");
     setCollapsed(!isCollapsed);
   };
 
