@@ -61,7 +61,7 @@ export const ProductDetails = styled.p`
   margin-bottom: 10px;
   letter-spacing: 0.5px;
   margin: 20px 0 20px;
-  font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
+  font-weight: "bold";
 `;
 
 export const ReorderButton = styled(Button)`

@@ -13,8 +13,13 @@ const AuthProvider = ({ children }) => {
       try {
         const token = await getAccessTokenSilently();
         setAccessToken(token);
+
+        const { updated_at, email, picture} = user;
+
         sessionStorage.setItem('access_token', token);
-        sessionStorage.setItem('user', user);
+        sessionStorage.setItem('email', email);
+        sessionStorage.setItem('picture', picture);
+        sessionStorage.setItem('last_seen', updated_at);
         // Schedule token refresh before it expires
         const { expires_in } = JSON.parse(atob(token.split('.')[1]));
         const refreshTimeout = expires_in * 1000 - 10000; // Refresh 10 seconds before expiration
@@ -36,7 +41,7 @@ const AuthProvider = ({ children }) => {
 
   const handleLogout = () => {
     logout({ returnTo: window.location.origin });
-    sessionStorage.removeItem('access_token');
+    sessionStorage.clear();
     setAccessToken(null);
   };
 
@@ -44,6 +49,13 @@ const AuthProvider = ({ children }) => {
     try {
       const token = await getAccessTokenSilently();
       setAccessToken(token);
+
+      const { updated_at, email, picture} = user;
+      
+      sessionStorage.setItem('email', email);
+      sessionStorage.setItem('picture', picture);
+      sessionStorage.setItem('last_seen', updated_at);
+
       sessionStorage.setItem('access_token', token);
 
       // Schedule the next token refresh

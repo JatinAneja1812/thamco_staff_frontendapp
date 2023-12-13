@@ -1,17 +1,20 @@
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import StyledAvatar from "../Components/Avatar/Avatar";
 import CartIconButton from "../Components/Buttons/CartButton/CartButton";
+import { useAuth } from "../Hooks/Authentication/AuthProvider";
 import "./Template.Styles.css";
 
-const Header = () => {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+const Header = ({collapsed}) => {
+  const { login, isAuthenticated, logout } = useAuth();
 
   const handleLogin = () => {
     if (isAuthenticated) {
-      logout({ returnTo: window.location.origin });
+      sessionStorage.clear();
+      logout();
     } else {
-      loginWithRedirect({ redirect_uri: window.location.origin });
+      login();
     }
   };
 
@@ -39,10 +42,14 @@ const Header = () => {
   const toggleNav = () => {
     setNavVisibility(!isNavVisible);
   };
-return (
-    <div className="header" style={{ position: "fixed", top: 0, width: "100%", zIndex: 1 }}>
+
+  return (
+    <div
+      className="header"
+      style={{ position: "fixed", top: 0, width: collapsed ?"107%" : "100%", zIndex: 1 }}
+    >
       <div className="header-flex">
-        <div className="brand">
+        <div className="brand" style={{ marginLeft: collapsed ? "-95px": "-212px"}}>
           <h1>ThAmCo Corporation Staff</h1>
         </div>
         <button onClick={toggleNav} className="Burger">
@@ -66,6 +73,7 @@ return (
               <button className="btn btn-primary" onClick={handleLogin}>
                 {isAuthenticated ? "Logout" : "Login"}
               </button>
+              <StyledAvatar />
             </nav>
           )}
         </CSSTransition>
@@ -112,6 +120,5 @@ return (
     </div>
   );
 };
-
 
 export default Header;

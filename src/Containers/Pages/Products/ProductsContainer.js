@@ -42,9 +42,10 @@ export default function ProductsContainer({categoryProducts}) {
         (error) => {
           openErrorNotification("Server Error", error.message);
         }
-      );
-
-      setIsLoading(false);
+      ) 
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const getAllCategoryProducts = () => {
@@ -58,28 +59,29 @@ export default function ProductsContainer({categoryProducts}) {
       },
       body: JSON.stringify(categoryName)
     })
-      .then(async (httpResponse) => {
-        if (httpResponse.status === 500) {
-          var errorMessage = await httpResponse.text();
-          throw new Error(errorMessage);
-        }
+    .then(async (httpResponse) => {
+      if (httpResponse.status === 500) {
+        var errorMessage = await httpResponse.text();
+        throw new Error(errorMessage);
+      }
 
-        if (!httpResponse.ok) {
-          throw new Error("Failed to get data.");
-        }
+      if (!httpResponse.ok) {
+        throw new Error("Failed to get data.");
+      }
 
-        return httpResponse.text();
-      })
-      .then(
-        (result) => {
-          setProducts(JSON.parse(result));
-        },
-        (error) => {
-          openErrorNotification("Server Error", error.message);
-        }
-      );
-
+      return httpResponse.text();
+    })
+    .then(
+      (result) => {
+        setProducts(JSON.parse(result));
+      },
+      (error) => {
+        openErrorNotification("Server Error", error.message);
+      }
+    )
+    .finally(() => {
       setIsLoading(false);
+    });
   };
 
   useEffect(() => {

@@ -65,25 +65,23 @@ export default function AddFundsModal(props) {
           <Input.TextArea disabled autoSize={{ minRows: 3, maxRows: 6 }} style={{ color: "black"}} />
         </Form.Item>
         <Form.Item
-            label="Update Funds"
+            label="Add Funds  (*Enter the amount you wnat to add.)"
             name="updateFunds"
             rules={[
                 { required: true, message: 'This field is required. Please enter the amount.' },
                 {
                     validator: async (_, value) => {
-                        console.log(value)
-                        const availableFunds = props.recordToEdit?.availableFunds || 0;
                         const enteredAmount = parseFloat(value);
 
-                        if (!isNaN(enteredAmount) && enteredAmount >= availableFunds) {
+                        if (!isNaN(enteredAmount) && enteredAmount >= 20) {
                             return Promise.resolve();
                         } else {
                         // Check if the input is not a number
                         if (isNaN(enteredAmount)) {
-                            throw new Error('Please enter a valid number.');
+                            throw new Error('Please enter a valid amount number.');
                         } else {
                             // If the entered amount is not valid, reject the Promise with an error message
-                            throw new Error('Update Funds must be greater than or equal to available funds');
+                            throw new Error('Minimum amount of funds to recharge is 20 GBP.');
                         }
                         }
                     },

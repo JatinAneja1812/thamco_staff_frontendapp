@@ -4,17 +4,17 @@ import { Star } from '@mui/icons-material';
 import  { InfoCircleOutlined } from '@ant-design/icons';
 import { ProductsCard, ProductCardMedia, ProductCardContent, ProductTitle, ProductText, ProductRatingContainer, ProductCardWrapper} from "./ProductsCard.styles";
 import ProductDetailsModal from '../../Modals/ProductsDetails/ProductDetailsModal';
-// import { groceryContext } from '../../Layout/Layout';
-// import { handleSessionStorage } from '../../../utils/utils';
-// import SuccessAlert from '../../SuccessAlert/SuccessAlert';
-
-
+import { useAuth0 } from '@auth0/auth0-react';
+import { groceryContext } from '../../../AppTemplate/Template';
+import handleSessionStorage from '../../../Utility/LibraryFunctions/HandleSessionStorage';
+import SuccessAlert from '../../Snackbars/SuccessAlert';
 
 const ProductCard = ({ product }) => {
   const { Img, ProductName, Price, Reviews, ReviewCount, Quantity, Unit } = product;
+  const { isAuthenticated } = useAuth0();
 
-  const isMediumScreen = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
-  const isSmallScreen = useMediaQuery('(max-width:768px)');
+  const ismediumscreen = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
+  const issmallscreen = useMediaQuery('(max-width:768px)');
 
   const [openAlert, setOpenAlert] = useState(false);
   const [openDetails, setOpenDetails] = useState(false);
@@ -30,40 +30,41 @@ const ProductCard = ({ product }) => {
     setSelectedProduct([]);
   }
 
-//   const { cartItemsState } = useContext(groceryContext);
-//   const [cartItems, setCartItems] = cartItemsState;
+  const { cartItemsState } = useContext(groceryContext);
+  const [cartItems, setCartItems] = cartItemsState;
 
-//   const handleAddToCartBtn = () => {
-//     let targetedProduct = product;
-//     let latestCartItems = cartItems;
+  const handleAddToCartBtn = () => {
+    console.log("clicked")
+    let targetedProduct = product;
+    let latestCartItems = cartItems;
 
-//     const isTargetedProductAlreadyExist = cartItems.find((item) => item.id === product.id);
-//     if (isTargetedProductAlreadyExist) {
-//       targetedProduct = {
-//         ...isTargetedProductAlreadyExist,
-//         quantity: isTargetedProductAlreadyExist.quantity + 1,
-//         total: (
-//           (isTargetedProductAlreadyExist.quantity + 1) * isTargetedProductAlreadyExist.price
-//         ).toFixed(2),
-//       };
-//       latestCartItems = cartItems.filter((item) => item.id !== targetedProduct.id);
-//     }
-//     setCartItems([targetedProduct, ...latestCartItems]);
-//     handleSessionStorage('set', 'cartItems', [targetedProduct, ...latestCartItems]);
+    const isTargetedProductAlreadyExist = cartItems.find((item) => item.ProductId === product.ProductId);
+    if (isTargetedProductAlreadyExist) {
+      targetedProduct = {
+        ...isTargetedProductAlreadyExist,
+        Quantity: isTargetedProductAlreadyExist.Quantity + 1,
+        total: (
+          (isTargetedProductAlreadyExist.Quantity + 1) * isTargetedProductAlreadyExist.Price
+        ).toFixed(2),
+      };
+      latestCartItems = cartItems.filter((item) => item.ProductId !== targetedProduct.ProductId);
+    }
+    setCartItems([targetedProduct, ...latestCartItems]);
+    handleSessionStorage('set', 'cartItems', [targetedProduct, ...latestCartItems]);
 
-//     setOpenAlert(!openAlert);
-//   };
+    setOpenAlert(!openAlert);
+  };
 
   return (
     <ProductCardWrapper>
-      {/* <SuccessAlert state={[openAlert, setOpenAlert]} massage={'Item added successfully'} /> */}
+      <SuccessAlert state={[openAlert, setOpenAlert]} massage={'Item is successfully added to your cart.'} />
 
       <Fade in={true}>
-        <ProductsCard isSmallScreen={isSmallScreen}>
+        <ProductsCard data-issmallscreen={issmallscreen}>
             {/* Product_img */}
             <ProductCardMedia
                 component="img"
-                height={isSmallScreen ? 140 : 200}
+                height={issmallscreen ? 140 : 200}
                 image={Img}
                 alt={ProductName}
             />
@@ -119,17 +120,18 @@ const ProductCard = ({ product }) => {
             {/* Product_content */}
             <CardActions>
                 <Button
-                fullWidth
-                className='addToCartButton'
-                //   onClick={handleAddToCartBtn}
-                size={isMediumScreen ? 'small' : 'medium'}
-                variant="outlined"
-                style={{
-                    background: "green",
-                    color: "white"
-                }}
+                  fullWidth
+                  className='addToCartButton'
+                  onClick={handleAddToCartBtn}
+                  size={ismediumscreen ? 'small' : 'medium'}
+                  variant="outlined"
+                  style={{
+                      background: "green",
+                      color: "white",
+                      display: isAuthenticated === false? "none" : "flex" 
+                  }}
                 >
-                Add to cart
+                  Add to cart
                 </Button>
             </CardActions>
         </ProductsCard>

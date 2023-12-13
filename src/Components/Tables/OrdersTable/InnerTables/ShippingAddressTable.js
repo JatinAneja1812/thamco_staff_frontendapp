@@ -1,15 +1,15 @@
 import React from "react";
-import InnerTableWrapper from "./CustomersAddressTable.styles";
+import InnerTablesWrapper from "./InnerTables.styles";
 
-const expandedInnerAddressTable = (record) => {
+export default function ShippingAddressTable(props) {
 
-    const records = Array.isArray(record) ? record : [record];
+    const records = Array.isArray(props.record) ? props.record : [props.record];
 
     const childrenColumns = [
         {
             title: "Shop No. & Street",
             render: (text, record, index) => (
-                <span>{record.locationNumber + " " + record.street}</span>
+                <span>{record.houseNumber + " " + record.street}</span>
             ),
         },
         {
@@ -19,10 +19,10 @@ const expandedInnerAddressTable = (record) => {
             render: (text, record, index) => record.city ?? "Undefined",
         },
         {
-            title: "State",
-            dataIndex: "state",
-            key: "state",
-            render: (text, record, index) => record.state ?? "Undefined",
+            title: "Country",
+            dataIndex: "country",
+            key: "country",
+            render: (text, record, index) => record.country ?? "Undefined",
 
         },
         {
@@ -34,8 +34,8 @@ const expandedInnerAddressTable = (record) => {
     ]
 
     return (
-        <InnerTableWrapper 
-                userId="userId"
+        <InnerTablesWrapper 
+                key="index"
                 columns={childrenColumns} 
                 dataSource={records} 
                 pagination={false} 
@@ -43,5 +43,3 @@ const expandedInnerAddressTable = (record) => {
         />
     )
 };
-
-export default expandedInnerAddressTable;
