@@ -19,8 +19,8 @@ export default function CustomerList(props) {
   const fetchData = async () => {
     try {
       const httpResponse = await fetch(
-        //CHANGE HERE
-        "https://localhost:7276/api/UserProfiles/GetAllCustomers",
+        //API: "https://localhost:7276/api/UserProfiles/GetAllCustomers"
+        "https://localhost:7259/api/Users/GetAllCustomers",
         {
           method: "GET",
           headers: {

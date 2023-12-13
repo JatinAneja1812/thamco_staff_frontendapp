@@ -40,8 +40,8 @@ const ShoppingCart = () => {
   const [alertOpen, setAlertOpen] = useState(false);
 
   const addNewOrder = (addNewOrderDTO) => {
-    //CHANGE HERE
-    fetch("https://localhost:7262/api/Order/AddOrderByStaff", {
+    //API:  "https://localhost:7262/api/Order/AddOrderByStaff"
+    fetch("https://localhost:7259/api/OrderManager/AddNewOrderByStaff", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -32,6 +32,7 @@ export default function OrdersTable(props) {
 
   const getOrderStatusOptions = (record) => {
     const { status, deliveryDate } = record;
+    console.log(record)
   
     if (status === OrderStatusEnum.Created.VALUE) {
       return [

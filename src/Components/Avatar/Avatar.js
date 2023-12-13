@@ -10,8 +10,8 @@ const StyledAvatar = ({ image = sessionStorage.getItem('picture') }) => {
   const [details, setDetails] = useState([]);
 
   const fetchData = () => {
-    //CHANGE HERE
-    fetch("https://localhost:7276/api/UserProfiles/GetStaffDetails", {
+    //API : "https://localhost:7276/api/UserProfiles/GetStaffDetails"
+    fetch("https://localhost:7259/api/Users/GetStaffUser", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
