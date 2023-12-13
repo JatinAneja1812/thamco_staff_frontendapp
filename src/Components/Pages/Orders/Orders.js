@@ -15,6 +15,9 @@ const Orders = (props) => {
           dataSource={props.ordersData}
           isLoading={props.isLoading}
           serverError={props.serverError}
+          deleteOrder={props.deleteOrder}
+          UpdateOrderStatus={props.UpdateOrderStatus}
+          UpdateOrderDeliveryDate={props.UpdateOrderDeliveryDate}
         />
       ),
     },

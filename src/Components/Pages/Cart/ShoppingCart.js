@@ -7,7 +7,7 @@ import CartItems from "./CartItems/CartItems";
 import CustomerList from "./CustomersList/CustomerList";
 import EmptyCart from "./EmptyCart/EmptyCart";
 import OrderSummary from "./OrderSummery/OrderSummery";
-// import DeliveryForm from "./DeliveryForm/DeliveryForm";
+import SuccessOrderCreationModal from "../../Modals/Orders/SuccessCreationModal";
 
 export const CheckoutContext = React.createContext();
 
@@ -79,6 +79,9 @@ const ShoppingCart = () => {
   const [isProceedToCheckout, setIsProceedToCheckout] = useState(false);
 
   return (
+    <>
+    <SuccessOrderCreationModal open={alertOpen}  />
+   
     <CheckoutContext.Provider value={[isProceedToCheckout, setIsProceedToCheckout]}>
       <div>
         {cartItems.length > 0 ? (
@@ -99,6 +102,7 @@ const ShoppingCart = () => {
         )}
       </div>
     </CheckoutContext.Provider>
+    </>
   );
 };
 

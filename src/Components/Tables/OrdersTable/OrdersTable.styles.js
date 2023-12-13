@@ -2,8 +2,9 @@ import { Table } from "antd";
 import styled from "styled-components";
 
 const OrdersTableWrapper = styled(Table)`
-  width: 90%; // Set a fixed width for the table
+  width: 96%; // Set a fixed width for the table
   margin: 0 auto; // Center the table horizontally
+  overflow-x: auto; // Allow horizontal scrolling
 
   .ant-pagination {
     display: flex;

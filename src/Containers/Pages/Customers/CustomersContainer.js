@@ -12,8 +12,8 @@ export default function CustomersContainer() {
   const getAllCustomers = () => {
 
     setIsLoading(true);
-
-    fetch("https://localhost:7259/api/Users/GetAllCustomers", {
+    // CHANGE HERE
+    fetch("https://localhost:7276/api/UserProfiles/GetAllCustomers", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -90,8 +90,8 @@ export default function CustomersContainer() {
   const editCustomerFunds = (CustomerFundsDTO) => {
     
     setIsLoading(true);
-
-    fetch("https://localhost:7259/api/Users/UpdateCustomerFunds", {
+    //CHNAGE HERE
+    fetch("https://localhost:7276/api/UserProfiles/UpdateUserFunds", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

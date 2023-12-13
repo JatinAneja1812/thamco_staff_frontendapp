@@ -11,6 +11,7 @@ import {
 } from "../../../Utility/LibraryFunctions/DatesUtility";
 import SearchInputDropdown from "../../Dropdowns/SearchInputDropdown/SearchInputDropdown";
 import OrdersTableWrapper from "./OrdersTable.styles";
+import OrderDetailsTab from "./InnerTables/OrderDetailsTab";
 
 const { Option } = Select;
 
@@ -98,6 +99,52 @@ export default function HistoricOrdersTable(props) {
       },
     },
     {
+      title: 'Customer Id',
+      dataIndex: 'customer',
+      key: 'customerId', // This is important for sorting and filtering
+      render: (customer) => (
+        <span>{customer ? customer.customerId : 'N/A'}</span>
+      ),
+      sorter: {
+        compare: (a, b) =>
+          a.customer && b.customer
+            ? a.customer.customerId.localeCompare(b.customer.customerId)
+            : 0,
+      },
+      filterDropdown: SearchInputDropdown,
+      filterIcon: <SearchOutlined />,
+      onFilter: (value, record) => {
+        return (
+          record.customer &&
+          record.customer.customerId &&
+          record.customer.customerId.toLowerCase().includes(value.toLowerCase())
+        );
+      },
+    },
+    {
+      title: 'Customer Name',
+      dataIndex: 'customer',
+      key: 'customerName', // This is important for sorting and filtering
+      render: (customer) => (
+        <span>{customer ? customer.customerName : 'N/A'}</span>
+      ),
+      sorter: {
+        compare: (a, b) =>
+          a.customer && b.customer
+            ? a.customer.customerName.localeCompare(b.customerName.customerId)
+            : 0,
+      },
+      filterDropdown: SearchInputDropdown,
+      filterIcon: <SearchOutlined />,
+      onFilter: (value, record) => {
+        return (
+          record.customer &&
+          record.customer.customerName &&
+          record.customer.customerName.toLowerCase().includes(value.toLowerCase())
+        );
+      },
+    },
+    {
         title: "Order Subtotal Price",
         width: "10vw",
         dataIndex: "subtotal",
@@ -167,6 +214,31 @@ export default function HistoricOrdersTable(props) {
         },
     },
     {
+      title: 'Order Notes',
+      dataIndex: 'orderNotes',
+      key: 'orderNotes', // This is important for sorting and filtering
+      render: (text) => {
+        return text || 'N/A'; // Display 'N/A' if text is falsy (null, undefined, empty string)
+      },
+      sorter: {
+        compare: (a, b) => {
+          return a.orderNotes === null
+            ? null
+            : a.orderNotes.localeCompare(b.orderNotes);
+        },
+      },
+      filterDropdown: SearchInputDropdown,
+      filterIcon: <SearchOutlined />,
+      onFilter: (value, record) => {
+        // record -> record to be rendered (object); value -> search string, where the search input is always at index 0 of the array (array of strings)
+        return value.length === 0
+          ? true
+          : record.orderNotes == null
+          ? false
+          : record.orderNotes.toLowerCase();
+      },
+    },
+    {
         title: "Order Status",
         dataIndex: "status",
         render: (text) => (
@@ -194,10 +266,10 @@ export default function HistoricOrdersTable(props) {
         bordered={true}
         dataSource={props.dataSource}
         loading={props.isLoading ? Loader : false}
-        // expandable={{
-        //   expandRowByClick: false,
-        //   expandedRowRender: expandedInnerAddressTable       
-        // }}
+        expandable={{
+          expandRowByClick: false,
+          expandedRowRender: OrderDetailsTab       
+        }}
         pagination={{
           position: ["bottomCenter"],
         }}

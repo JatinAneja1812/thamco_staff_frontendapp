@@ -21,7 +21,6 @@ const CenteredContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 `;
 
 const SuccessMessage = styled.div`
@@ -29,18 +28,23 @@ const SuccessMessage = styled.div`
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background-color: #4caf50;
-  color: white;
+  background-color: transparent;
+  font-weight: 700;
+  color: black;
   border-radius: 8px;
+  width: 45vh;
   animation: ${checkAnimation} 0.5s ease-in-out;
+  justify-content: center;
 `;
 
 const CheckIcon = styled.span`
-  font-size: 24px;
+  font-size: 27px;
 `;
 
 const SuccessText = styled.p`
   margin: 0;
+  font-size: 24px;
+  font-weight: 700;
 `;
 
 export {CenteredContainer, SuccessMessage, CheckIcon, SuccessText}

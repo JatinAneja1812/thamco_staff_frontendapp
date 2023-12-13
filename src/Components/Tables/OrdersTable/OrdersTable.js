@@ -1,51 +1,75 @@
-import React, {useState} from "react";
-import OrdersTableWrapper from "./OrdersTable.styles";
 import {
-  SearchOutlined,
   DeleteOutlined,
   LoadingOutlined,
-  PlusOutlined
+  SearchOutlined
 } from "@ant-design/icons";
-import SearchInputDropdown from "../../Dropdowns/SearchInputDropdown/SearchInputDropdown";
+import { Button, DatePicker, Popconfirm, Select } from "antd";
+import React from "react";
+import { OrderStatusEnum, OrderStatusStringEnum } from "../../../Enums/OrderStatusEnum";
 import {
   TransformIntoDateTimeString,
   compareDates,
 } from "../../../Utility/LibraryFunctions/DatesUtility";
-import { Button, Popconfirm, Select  } from "antd";
-import { OrderStatusEnum } from "../../../Enums/OrderStatusEnum";
+import SearchInputDropdown from "../../Dropdowns/SearchInputDropdown/SearchInputDropdown";
 import OrderDetailsTab from "./InnerTables/OrderDetailsTab";
+import OrdersTableWrapper from "./OrdersTable.styles";
 
 const { Option } = Select;
 
 export default function OrdersTable(props) {
 
-  const Loader = {
-    indicator: (
-      <LoadingOutlined
-        style={{
-          fontSize: 24,
-        }}
-        spin
-      />
-    ),
-    alt: "",
-    size: "large",
-  };
-
   const handRecordToDelete = (record) => {
-    props.deletCustomer(record);
+    props.deleteOrder(record.orderId);
   };
   
   const handleStatusChange = (record, value) => {
-    // Handle the status change here and update your data accordingly
-    console.log(`Order ${record.orderId} status changed to ${value}`);
-    // Update your data or make an API call to update the status
+    props.UpdateOrderStatus(record.orderId, value);
+  };
+  
+  const handleDeliveryDateChange = (record, date) => {
+    props.UpdateOrderDeliveryDate(record.orderId, date);
   };
 
+  const getOrderStatusOptions = (record) => {
+    const { status, deliveryDate } = record;
+  
+    if (status === OrderStatusEnum.Created.VALUE) {
+      return [
+        OrderStatusEnum.Processing.VALUE,
+        OrderStatusEnum.Waiting.VALUE,
+      ];
+    } else if ((status === OrderStatusEnum.Processing.VALUE || status === OrderStatusEnum.Waiting.VALUE) && !deliveryDate) {
+      return [
+        OrderStatusEnum.Processing.VALUE,
+        OrderStatusEnum.Waiting.VALUE,
+      ];
+    } else if ((status === OrderStatusEnum.Processing.VALUE || status === OrderStatusEnum.Waiting.VALUE) && deliveryDate) {
+      return [
+        OrderStatusEnum.Processing.VALUE,
+        OrderStatusEnum.Waiting.VALUE,
+        OrderStatusEnum.Dispatched.VALUE,
+      ];
+    } else if (status === OrderStatusEnum.Dispatched.VALUE && deliveryDate) {
+      return [
+        OrderStatusEnum.Dispatched.VALUE,
+        OrderStatusEnum.Delivered.VALUE,
+      ];
+    }
+  
+    return [];
+  };
+  
+  const isDeliveryDateEnabled = (record) => {
+    const { status } = record;
+    return (
+      (status === OrderStatusEnum.Processing.VALUE || status === OrderStatusEnum.Waiting.VALUE) ||
+      (status === OrderStatusEnum.Dispatched.VALUE && record.deliveryDate)
+    );
+  };
+  
   const columns = [
     {
       title: "Order ID",
-      width: "10vw",
       dataIndex: "orderId",
       sorter: {
         compare: (a, b) => {
@@ -65,7 +89,7 @@ export default function OrdersTable(props) {
     },
     {
       title: "Order Creation Date",
-      width: "10vw",
+
       dataIndex: "orderCreationDate",
       sorter: {
         compare: (a, b) => {
@@ -90,7 +114,7 @@ export default function OrdersTable(props) {
     },
     {
       title: "Order Created By",
-      width: "10vw",
+
       dataIndex: "createdBy",
       sorter: {
         compare: (a, b) => {
@@ -112,7 +136,6 @@ export default function OrdersTable(props) {
     },
     {
       title: 'Customer Id',
-      width: '10vw',
       dataIndex: 'customer',
       key: 'customerId', // This is important for sorting and filtering
       render: (customer) => (
@@ -136,7 +159,6 @@ export default function OrdersTable(props) {
     },
     {
       title: 'Customer Name',
-      width: '10vw',
       dataIndex: 'customer',
       key: 'customerName', // This is important for sorting and filtering
       render: (customer) => (
@@ -160,7 +182,7 @@ export default function OrdersTable(props) {
     },
     {
         title: "Order Subtotal Price",
-        width: "10vw",
+
         dataIndex: "subtotal",
         sorter: {
           compare: (a, b) => {
@@ -183,7 +205,7 @@ export default function OrdersTable(props) {
     },
     {
         title: "Delivery Charges",
-        width: "10vw",
+
         dataIndex: "deliveryCharge",
         sorter: {
             compare: (a, b) => {
@@ -206,7 +228,7 @@ export default function OrdersTable(props) {
     },
     {
         title: "Order Total Price",
-        width: "10vw",
+
         dataIndex: "totalPrice",
         render: (text, record) => `£ ${text}`, 
         sorter: {
@@ -228,22 +250,59 @@ export default function OrdersTable(props) {
         },
     },
     {
-        title: "Order Status",
-        dataIndex: "status",
-        render: (text, record) => (
-          <Select
-            value={text !== undefined ? text : OrderStatusEnum.Created.VALUE} // Set initial value to Created if no status is provided
-            style={{ width: 120 }}
-            onChange={(value) => handleStatusChange(record, value)}
-          >
-            {Object.values(OrderStatusEnum).map(status => (
-              <Option key={status.VALUE} value={status.VALUE}>
-                {status.STRING}
-              </Option>
-            ))}
-          </Select>
-        ),
+      title: 'Order Notes',
+      dataIndex: 'orderNotes',
+      key: 'orderNotes', // This is important for sorting and filtering
+      render: (text) => {
+        return text || 'N/A'; // Display 'N/A' if text is falsy (null, undefined, empty string)
       },
+      sorter: {
+        compare: (a, b) => {
+          return a.orderNotes === null
+            ? null
+            : a.orderNotes.localeCompare(b.orderNotes);
+        },
+      },
+      filterDropdown: SearchInputDropdown,
+      filterIcon: <SearchOutlined />,
+      onFilter: (value, record) => {
+        // record -> record to be rendered (object); value -> search string, where the search input is always at index 0 of the array (array of strings)
+        return value.length === 0
+          ? true
+          : record.orderNotes == null
+          ? false
+          : record.orderNotes.toLowerCase();
+      },
+    },
+    {
+      title: "Order Status",
+      dataIndex: "status",
+      render: (text, record) => (
+        <Select
+          value={text !== undefined ? OrderStatusStringEnum[text] : OrderStatusEnum.Created.VALUE}
+          style={{ width: 120 }}
+          onChange={(value) => handleStatusChange(record, value)}
+        >
+          {getOrderStatusOptions(record).map(statusValue => (
+            <Option key={statusValue} value={statusValue}>
+              {OrderStatusStringEnum[statusValue]}
+            </Option>
+          ))}
+        </Select>
+      ),
+    },
+    {
+      title: "Schedule Delivery",
+      dataIndex: "deliveryDate",
+      width: 350,
+      render: (text, record) => (
+        <DatePicker
+          disabled={!isDeliveryDateEnabled(record) || record.status === 105 }
+          onChange={(date) => handleDeliveryDateChange(record, date)}
+          defaultValue={record.deliveryDate === undefined ? undefined : TransformIntoDateTimeString(record.deliveryDate)} 
+        />
+      ),
+    }
 
   ];
 
@@ -265,6 +324,7 @@ export default function OrdersTable(props) {
               >
                 <Button
                   type="link"
+                  disabled={record.status >= 102 ? true : false }
                   icon={
                     <DeleteOutlined
                       style={{
@@ -284,6 +344,19 @@ export default function OrdersTable(props) {
     },
   ];
 
+  const Loader = {
+    indicator: (
+      <LoadingOutlined
+        style={{
+          fontSize: 24,
+        }}
+        spin
+      />
+    ),
+    alt: "",
+    size: "large",
+  };
+  
   const tableColumns = columns.concat(operationColumns);
 
   return (
@@ -300,6 +373,9 @@ export default function OrdersTable(props) {
         }}
         pagination={{
           position: ["bottomCenter"],
+        }}
+        scroll={{
+          x: 1300,
         }}
         locale={
           props.isLoading

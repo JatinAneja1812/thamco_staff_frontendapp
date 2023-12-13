@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
-import { openErrorNotification } from '../../../Hooks/Notification/GlobalNotification';
+import React, { useEffect, useState } from 'react';
 import Orders from '../../../Components/Pages/Orders/Orders';
+import { openErrorNotification } from '../../../Hooks/Notification/GlobalNotification';
 
 export default function OrdersContainer() {
 
@@ -42,9 +42,10 @@ export default function OrdersContainer() {
           openErrorNotification("Server Error", error.message);
           setServerError(error);
         }
-      );
-
-      setIsLoading(false);
+      )
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   const getAllHistoricOrders = () => {
@@ -77,9 +78,10 @@ export default function OrdersContainer() {
           openErrorNotification("Server Error", error.message);
           setServerError(error);
         }
-      );
-
-      setIsLoading(false);
+      )
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   const getAllActiveOrdersCount = () => {
@@ -106,22 +108,155 @@ export default function OrdersContainer() {
       })
       .then(
         (result) => {
-          console.log(JSON.parse(result));
           setActiveOrdersCount(JSON.parse(result));
-          
         },
         (error) => {
           openErrorNotification("Server Error", error.message);
           setServerError(error);
         }
-      );
+      )
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
 
-      setIsLoading(false);
+  const deleteOrder = (orderID) => {
+    setIsLoading(true);
+       //CHANGE HERE
+    fetch("https://localhost:7262/api/Order/CancelOrder", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+          //Authorization: "Bearer " + sessionStorage.getItem("access_token"),
+        OrderId: orderID.toString()
+      },
+    })
+      .then(async (httpResponse) => {
+        if (httpResponse.status === 500) {
+          throw new Error(await httpResponse.text());
+        }
+
+        if (httpResponse.status === 400) {
+          throw new Error(await httpResponse.text());
+        }
+  
+        if (!httpResponse.ok) {
+          throw new Error("Failed to get data.");
+        }
+  
+        return httpResponse.text();
+      })
+      .then(
+        () => {
+          getAllOrders();
+        },
+        (error) => {
+          openErrorNotification("Server Error", error.message);
+          setServerError(error);
+        }
+      )
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  const UpdateOrderStatus = (orderID, status) => {
+
+    const orderStatusDTO = {
+      OrderId: orderID,
+      OrderStatus: status
+    };
+
+    setIsLoading(true);
+       //CHANGE HERE
+    fetch("https://localhost:7262/api/Order/UpdateOrderStatus", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+          //Authorization: "Bearer " + sessionStorage.getItem("access_token"),
+      },
+      body: JSON.stringify(orderStatusDTO)
+    })
+      .then(async (httpResponse) => {
+        if (httpResponse.status === 500) {
+          throw new Error(await httpResponse.text());
+        }
+
+        if (httpResponse.status === 400) {
+          throw new Error(await httpResponse.text());
+        }
+  
+        if (!httpResponse.ok) {
+          throw new Error("Failed to get data.");
+        }
+  
+        return httpResponse.text();
+      })
+      .then(
+        () => {
+          getAllOrders();
+          getAllHistoricOrders();
+        },
+        (error) => {
+          openErrorNotification("Server Error", error.message);
+          setServerError(error);
+        }
+      ).finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  const UpdateOrderDeliveryDate = (orderID, deliveryDate) => {
+
+    const scheduledOrderDTO = {
+      OrderId: orderID,
+      DeliveryDate: deliveryDate
+    };
+
+    setIsLoading(true);
+       //CHANGE HERE
+    fetch("https://localhost:7262/api/Order/UpdateOrderDeliveryDate", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+          //Authorization: "Bearer " + sessionStorage.getItem("access_token"), 
+      },
+      body: JSON.stringify(scheduledOrderDTO)
+    })
+      .then(async (httpResponse) => {
+        if (httpResponse.status === 500) {
+          throw new Error(await httpResponse.text());
+        }
+
+        if (httpResponse.status === 400) {
+          throw new Error(await httpResponse.text());
+        }
+  
+        if (!httpResponse.ok) {
+          throw new Error("Failed to get data.");
+        }
+  
+        return httpResponse.text();
+      })
+      .then(
+        () => {
+          getAllOrders();
+          getAllHistoricOrders();
+        },
+        (error) => {
+          openErrorNotification("Server Error", error.message);
+          setServerError(error);
+        }
+      )
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   useEffect(() => {
     getAllOrders();
     getAllHistoricOrders();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -135,6 +270,9 @@ export default function OrdersContainer() {
         setServerError={setServerError}
         serverError={serverError}
         activeOrdersCount={activeOrdersCount}
+        deleteOrder={deleteOrder}
+        UpdateOrderStatus={UpdateOrderStatus}
+        UpdateOrderDeliveryDate={UpdateOrderDeliveryDate}
       />
     </>
   )

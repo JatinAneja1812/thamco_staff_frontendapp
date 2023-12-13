@@ -42,9 +42,10 @@ export default function ProductsContainer({categoryProducts}) {
         (error) => {
           openErrorNotification("Server Error", error.message);
         }
-      );
-
-      setIsLoading(false);
+      ) 
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const getAllCategoryProducts = () => {
@@ -77,9 +78,10 @@ export default function ProductsContainer({categoryProducts}) {
       (error) => {
         openErrorNotification("Server Error", error.message);
       }
-    );
-
-    setIsLoading(false);
+    )
+    .finally(() => {
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {

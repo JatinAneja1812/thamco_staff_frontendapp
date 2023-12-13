@@ -8,4 +8,14 @@ const OrderStatusEnum = {
     Error: {VALUE: 107, STRING: 'Error'}
 };
 
-export { OrderStatusEnum }
+const OrderStatusStringEnum = {
+    101: 'Created',
+    102: 'Processing',
+    103: 'Waiting',
+    104: 'Cancelled',
+    105: 'Dispatched',
+    106: 'Delivered',
+    107: 'Error'
+};
+
+export { OrderStatusEnum, OrderStatusStringEnum }

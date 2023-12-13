@@ -1,9 +1,7 @@
-import { StyledModal } from "../StyledModal";
-import React from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import EditIcon from '@mui/icons-material/Edit';
+import React from "react";
+import { StyledModal } from "../StyledModal";
 
 export default function UserDetailsModal(props) {
   const { firstName, lastName, username, email, userId, phoneNumber } =
@@ -41,25 +39,6 @@ export default function UserDetailsModal(props) {
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
           Phone Number: {phoneNumber}
         </Typography>
-
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<EditIcon />}
-          style={{ marginTop: 20 }}
-          disabled
-        >
-          Edit Number
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<EditIcon />}
-          style={{ marginTop: 20, marginLeft: 10 }}
-          disabled
-        >
-          Edit Address
-        </Button>
       </Paper>
     </StyledModal>
   );

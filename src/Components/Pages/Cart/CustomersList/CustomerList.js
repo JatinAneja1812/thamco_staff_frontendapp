@@ -2,11 +2,9 @@ import { Button } from "@mui/material";
 import { Col, Form, Input, Row, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { groceryContext } from "../../../../AppTemplate/Template";
 import handleSessionStorage from "../../../../Utility/LibraryFunctions/HandleSessionStorage";
 import ReturnButton from "../../../Buttons/ReturnButton/ReturnButton";
-import SuccessOrderCreationModal from "../../../Modals/Orders/SuccessCreationModal";
 
 const { Option } = Select;
 
@@ -51,8 +49,6 @@ export default function CustomerList(props) {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const navigate = useNavigate();
 
   const handleCustomerChange = (customerId) => {
     const customer = customerList.find(
@@ -171,12 +167,11 @@ export default function CustomerList(props) {
     sessionStorage.removeItem("subtotal");
     sessionStorage.removeItem("deliveryCharge");
     setCartItems([]);
-    navigate("/orders");
+    
   };
 
   return (
     <>
-      <SuccessOrderCreationModal open={props.alertOpen}  />
       <ReturnButton />
       <div>
         <h1
