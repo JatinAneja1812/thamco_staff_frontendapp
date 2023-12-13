@@ -1,5 +1,5 @@
 // Set Session Storage Function //
-export const handleSessionStorage = (action, key, target) => {
+export default function handleSessionStorage(action, key, target){
     // Set to SessionStorage
     if (action === 'set') {
         sessionStorage.setItem('grocery_' + key, JSON.stringify(target))

@@ -1,13 +1,11 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Tooltip } from "antd";
 import React from "react";
-import { useNavigate } from "react-router";
+
 import CartButton from "./CartButton.styles";
 
 const CartIconButton = (props) => {
 //   const [itemCount, setItemCount] = useState(0);
-  const navigate = useNavigate();
-
 
   return (
     <div>
@@ -18,7 +16,7 @@ const CartIconButton = (props) => {
               color: "#ffae00",
               fontSize: "26px",
             }}
-            onClick={() => navigate("/cart")}
+            to={"/cart"}
             // disabled
             sx={{ textTransform: "capitalize" }}
           >

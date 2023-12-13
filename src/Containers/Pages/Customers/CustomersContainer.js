@@ -12,7 +12,7 @@ export default function CustomersContainer() {
   const getAllCustomers = () => {
 
     setIsLoading(true);
-
+    // API: "https://localhost:7276/api/UserProfiles/GetAllCustomers"
     fetch("https://localhost:7259/api/Users/GetAllCustomers", {
       method: "GET",
       headers: {
@@ -88,11 +88,9 @@ export default function CustomersContainer() {
   };
 
   const editCustomerFunds = (CustomerFundsDTO) => {
-
-    console.log(CustomerFundsDTO)
-
+    
     setIsLoading(true);
-
+    //API: "https://localhost:7276/api/UserProfiles/UpdateUserFunds"
     fetch("https://localhost:7259/api/Users/UpdateCustomerFunds", {
       method: "PATCH",
       headers: {

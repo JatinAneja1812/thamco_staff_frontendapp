@@ -58,7 +58,7 @@ export default function AllProducts(props) {
               {!props.isLoading ?
                 filteredAndSearchedProducts.map(product => (
                   <ProductCard
-                    key={product.id}
+                    key={product.ProductId}
                     product={product} />
                 ))
                 : Array.from({ length: 17 }).map((pd, i) => {
