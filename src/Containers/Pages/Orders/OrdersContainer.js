@@ -9,11 +9,14 @@ export default function OrdersContainer() {
   const [historicOrders, setHistoricOrders] = useState([]);
   const [serverError, setServerError] = useState(null);
   const [activeOrdersCount, setActiveOrdersCount] = useState(null);
+  const REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL = process.env.REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL;   // Production Base API
 
   const getAllOrders = () => {
     setIsLoading(true);
-       //API: "https://localhost:7262/api/Order/GetAllOrders" 
-    fetch("https://localhost:7259/api/OrderManager/GetAllOrders", {
+    // Orders API: "https://localhost:7262/api/Order/GetAllOrders" 
+    // BFF (Local): https://localhost:7259/api/OrderManager/GetAllOrders
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/OrderManager/GetAllOrders`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -49,9 +52,13 @@ export default function OrdersContainer() {
   }
 
   const getAllHistoricOrders = () => {
+
     setIsLoading(true);
-       //API: "https://localhost:7262/api/Order/GetAllHistoricOrders"
-    fetch("https://localhost:7259/api/OrderManager/GetAllHistoricOrders", {
+    
+    // Orders API: "https://localhost:7262/api/Order/GetAllHistoricOrders"
+    // BFF (Local): https://localhost:7259/api/OrderManager/GetAllHistoricOrders
+    
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/OrderManager/GetAllHistoricOrders`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -84,46 +91,13 @@ export default function OrdersContainer() {
       });
   }
 
-  // const getAllActiveOrdersCount = () => {
-  //   setIsLoading(true);
-  //      //API: "https://localhost:7262/api/Order/GetAllOrdersCount"
-  //   fetch("https://localhost:7259/api/OrderManager/GetOrdersCount", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //        Authorization: "Bearer " + sessionStorage.getItem("access_token"),
-  //     },
-  //   })
-  //     .then(async (httpResponse) => {
-  //       if (httpResponse.status === 500) {
-  //         var errorMessage = await httpResponse.text();
-  //         throw new Error(errorMessage);
-  //       }
-  
-  //       if (!httpResponse.ok) {
-  //         throw new Error("Failed to get data.");
-  //       }
-  
-  //       return httpResponse.text();
-  //     })
-  //     .then(
-  //       (result) => {
-  //         setActiveOrdersCount(JSON.parse(result));
-  //       },
-  //       (error) => {
-  //         openErrorNotification("Server Error", error.message);
-  //         setServerError(error);
-  //       }
-  //     )
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     });
-  // }
-
   const deleteOrder = (orderID) => {
     setIsLoading(true);
-       //API:  "https://localhost:7262/api/Order/CancelOrder"
-    fetch("https://localhost:7259/api/OrderManager/CancelOrder", {
+
+      // Orders API:  "https://localhost:7262/api/Order/CancelOrder"
+      // BFF (Local): https://localhost:7259/api/OrderManager/CancelOrder
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/OrderManager/CancelOrder`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -168,8 +142,11 @@ export default function OrdersContainer() {
     };
 
     setIsLoading(true);
-       //API: "https://localhost:7262/api/Order/UpdateOrderStatus"
-    fetch("https://localhost:7259/api/OrderManager/UpdateOrderStatus", {
+    
+    // Orders API: "https://localhost:7262/api/Order/UpdateOrderStatus"
+    // BFF (Local): https://localhost:7259/api/OrderManager/UpdateOrderStatus
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/OrderManager/UpdateOrderStatus`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -214,8 +191,11 @@ export default function OrdersContainer() {
     };
 
     setIsLoading(true);
-       //API: "https://localhost:7262/api/Order/UpdateOrderDeliveryDate"
-    fetch("https://localhost:7259/api/OrderManager/UpdateOrderDeliveryDate", {
+      
+    //Orders API: "https://localhost:7262/api/Order/UpdateOrderDeliveryDate"
+    // BFF (Local): https://localhost:7259/api/OrderManager/UpdateOrderDeliveryDate
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/OrderManager/UpdateOrderDeliveryDate`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

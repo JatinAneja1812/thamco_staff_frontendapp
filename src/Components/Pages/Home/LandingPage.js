@@ -16,12 +16,15 @@ export default function LandingPage() {
 
   const [userReviews, setUserReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL = process.env.REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL;   // Production Base API
 
   const getUsersReviews = () => {
 
     setIsLoading(true);
 
-    fetch("https://localhost:7259/api/UserReviews/GetAllReviews", {
+    // BFF (Local): https://localhost:7259/api/UserReviews/GetAllReviews
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/UserReviews/GetAllReviews`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -53,6 +56,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     getUsersReviews();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

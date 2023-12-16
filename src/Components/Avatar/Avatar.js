@@ -9,9 +9,13 @@ const StyledAvatar = ({ image = sessionStorage.getItem('picture') }) => {
   const [isModelOpen, setModelOpen ] = useState(false);
   const [details, setDetails] = useState([]);
 
+  const REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL = process.env.REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL;   // Production Base API
+  
   const fetchData = () => {
-    //API : "https://localhost:7276/api/UserProfiles/GetStaffDetails"
-    fetch("https://localhost:7259/api/Users/GetStaffUser", {
+    //UserProfiles API : "https://localhost:7276/api/UserProfiles/GetStaffDetails"
+    // BFF (Local): https://localhost:7259/api/Users/GetStaffUser
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/Users/GetStaffUser`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
