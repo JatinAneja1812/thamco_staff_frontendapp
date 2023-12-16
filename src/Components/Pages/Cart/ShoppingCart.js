@@ -38,10 +38,14 @@ const ShoppingCart = () => {
   window.scroll({ top: 0 });
 
   const [alertOpen, setAlertOpen] = useState(false);
-
+  const REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL = process.env.REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL;   // Production Base API
+  
   const addNewOrder = (addNewOrderDTO) => {
-    //API:  "https://localhost:7262/api/Order/AddOrderByStaff"
-    fetch("https://localhost:7259/api/OrderManager/AddNewOrderByStaff", {
+
+    // Orders API:  "https://localhost:7262/api/Order/AddOrderByStaff"
+    // BFF (Local): https://localhost:7259/api/OrderManager/AddNewOrderByStaff
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/OrderManager/AddNewOrderByStaff`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +67,6 @@ const ShoppingCart = () => {
       })
       .then(
         () => {
-          console.log("Added");
           setAlertOpen(true);
         },
         (error) => {

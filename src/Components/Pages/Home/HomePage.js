@@ -15,12 +15,15 @@ function HomePage() {
 
   const [userReviews, setUserReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL = process.env.REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL;   // Production Base API
 
   const getUsersReviews = () => {
  
     setIsLoading(true);
+    
+    // BFF (Local): https://localhost:7259/api/UserReviews/GetAllReviews
 
-    fetch("https://localhost:7259/api/UserReviews/GetAllReviews", {
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/UserReviews/GetAllReviews`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -52,8 +55,10 @@ function HomePage() {
 
   const getStaffUser = () => {
 
-    //API: "https://localhost:7276/api/UserProfiles/GetStaffDetails"
-    fetch("https://localhost:7259/api/Users/GetStaffUser", {
+    //UserProfiles API: "https://localhost:7276/api/UserProfiles/GetStaffDetails"
+    // BFF (Local): https://localhost:7259/api/Users/GetStaffUser
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/Users/GetStaffUser`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -88,6 +93,7 @@ function HomePage() {
   useEffect(() => {
     getUsersReviews();
     getStaffUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

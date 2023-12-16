@@ -9,11 +9,15 @@ export default function CustomersContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
 
+  const REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL = process.env.REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL;   // Production Base API
+
   const getAllCustomers = () => {
 
     setIsLoading(true);
-    // API: "https://localhost:7276/api/UserProfiles/GetAllCustomers"
-    fetch("https://localhost:7259/api/Users/GetAllCustomers", {
+    // UserProfiles API: "https://localhost:7276/api/UserProfiles/GetAllCustomers"
+    // BFF (Local): https://localhost:7259/api/Users/GetAllCustomers
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/Users/GetAllCustomers`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -52,8 +56,10 @@ export default function CustomersContainer() {
     let UserId = record.userId;
 
     setIsLoading(true);
+    // UserProfiles API: "https://localhost:7276/api/UserProfiles/RemoveUser"
+    // BFF (Local): https://localhost:7259/api/Users/RemoveCustomer
 
-    fetch("https://localhost:7259/api/Users/RemoveCustomer", {
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/Users/RemoveCustomer`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -90,8 +96,11 @@ export default function CustomersContainer() {
   const editCustomerFunds = (CustomerFundsDTO) => {
     
     setIsLoading(true);
-    //API: "https://localhost:7276/api/UserProfiles/UpdateUserFunds"
-    fetch("https://localhost:7259/api/Users/UpdateCustomerFunds", {
+
+    // UserProfiles API: "https://localhost:7276/api/UserProfiles/UpdateUserFunds"
+    // BFF (Local): https://localhost:7259/api/Users/UpdateCustomerFunds
+
+    fetch(`${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/Users/UpdateCustomerFunds`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
