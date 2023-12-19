@@ -50,7 +50,7 @@ const Header = ({collapsed}) => {
     >
       <div className="header-flex">
         <div className="brand" style={{ marginLeft: collapsed ? "-95px": "-212px"}}>
-          <h1>ThAmCo Corporation Staff</h1>
+          <h1>ThAmCo Corporation Staff Portal</h1>
         </div>
         <button onClick={toggleNav} className="Burger">
           🍔
