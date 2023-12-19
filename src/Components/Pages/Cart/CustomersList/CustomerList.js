@@ -16,11 +16,13 @@ export default function CustomerList(props) {
   const [customerList, setCustomerList] = useState([]);
   const [openDetails, setOpenDetails] = useState(false);
 
+  const REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL = process.env.REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL; 
+  
   const fetchData = async () => {
     try {
       const httpResponse = await fetch(
         //API: "https://localhost:7276/api/UserProfiles/GetAllCustomers"
-        "https://localhost:7259/api/Users/GetAllCustomers",
+        `${REACT_APP_STAFFPORTAL_BFF_WEBAPI_BASE_URL}/api/Users/GetAllCustomers`,
         {
           method: "GET",
           headers: {
